@@ -6018,24 +6018,24 @@
             "name": "Background Color",
             "children": [
               {
-                "name": "Frescopa Red",
-                "value": "frescopa-background-red"
+                "name": "tcs Red",
+                "value": "tcs-background-red"
               },
               {
-                "name": "Frescopa Yellow",
-                "value": "frescopa-background-yellow"
+                "name": "tcs Yellow",
+                "value": "tcs-background-yellow"
               },
               {
-                "name": "Frescopa Blue",
-                "value": "frescopa-background-blue"
+                "name": "tcs Blue",
+                "value": "tcs-background-blue"
               },
               {
-                "name": "Frescopa Beige",
-                "value": "frescopa-background-beige"
+                "name": "tcs Beige",
+                "value": "tcs-background-beige"
               },
               {
-                "name": "Frescopa Black",
-                "value": "frescopa-background-black"
+                "name": "tcs Black",
+                "value": "tcs-background-black"
               }
             ]
           }

@@ -1,7 +1,7 @@
 :root {
     --background-color-primary: #fff;
-    --label-color: #58181D;
-    --border-color: #FFBB63;
+    --label-color: #58181d;
+    --border-color: #ffbb63;
     --form-error-color: #ff5f3f;
     --button-primary-color: #00657d;
     --button-secondary-color: #666;
@@ -39,7 +39,7 @@
     --form-fieldset-legend-padding: 0;
     --form-button-color: var(--background-color-primary);
     --form-button-font-size: var(--form-font-size-s);
-    --form-button-background-color: #00647D;
+    --form-button-background-color: #00647d;
     --form-button-background-hover-color: var(--button-primary-hover-color);
     --form-button-border: 2px solid transparent;
     --form-button-padding: 15px 40px;
@@ -134,29 +134,29 @@ main .form select {
     padding: var(--form-input-padding);
     font-size: var(--form-input-font-size);
     max-width: unset;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     margin-bottom: 1rem;
     border-radius: 20px;
 }
 
-main .form input[name='password'] {
+main .form input[name="password"] {
     -webkit-text-security: disc;
 }
 
 main .form select {
-  padding-top: 0;
-  padding-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
-main .form input[type='file'] {
+main .form input[type="file"] {
     border: none;
-    padding-inline-start:0;
+    padding-inline-start: 0;
     background: unset;
     color: unset;
 }
 
-main .form input[type='checkbox'],
-main .form input[type='radio'] {
+main .form input[type="checkbox"],
+main .form input[type="radio"] {
     width: 24px;
     height: 24px;
     flex: none;
@@ -169,13 +169,13 @@ main .form input[type='radio'] {
     cursor: pointer;
 }
 
-main .form input[type='checkbox']:checked {
+main .form input[type="checkbox"]:checked {
     background-color: var(--border-color);
     position: relative;
 }
 
-main .form input[type='checkbox']:checked::after {
-    content: '✓';
+main .form input[type="checkbox"]:checked::after {
+    content: "✓";
     position: absolute;
     color: white;
     font-size: 16px;
@@ -188,7 +188,8 @@ main .form textarea {
     min-height: 100px;
 }
 
-main .form input:hover, main .form select:hover {
+main .form input:hover,
+main .form select:hover {
     border-color: rgb(90 92 96);
 }
 
@@ -210,14 +211,14 @@ main .form fieldset.radio-group-wrapper legend {
     color: var(--form-label-color);
 }
 
-main .form form .wizard > legend{
+main .form form .wizard > legend {
     width: 100%;
 }
 
 main .form form fieldset.checkbox-group-wrapper,
 main .form form fieldset.radio-group-wrapper {
     padding-left: 0;
-    margin-left:0;
+    margin-left: 0;
 }
 
 main .form form fieldset.checkbox-group-wrapper > legend,
@@ -252,7 +253,8 @@ main .form form p {
     margin: var(--form-paragraph-margin);
 }
 
-main .form form .checkbox-wrapper, main .form form .radio-wrapper {
+main .form form .checkbox-wrapper,
+main .form form .radio-wrapper {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -269,7 +271,7 @@ main .form form fieldset > .checkbox-wrapper {
     margin-left: var(--form-field-gap);
 }
 
-main .form .radio-wrapper  label,
+main .form .radio-wrapper label,
 main .form .checkbox-wrapper label {
     flex-basis: calc(100% - 34px);
 }
@@ -284,7 +286,7 @@ main .form form fieldset.cards > .checkbox-wrapper > label {
     gap: 1rem;
     margin: 0 0 1rem;
     border-radius: 8px;
-    border: 1px solid #E5E5E5;
+    border: 1px solid #e5e5e5;
     padding: 1rem;
     cursor: pointer;
     align-items: end;
@@ -292,15 +294,14 @@ main .form form fieldset.cards > .checkbox-wrapper > label {
 }
 
 main .form form fieldset.cards.horizontal > .radio-wrapper > label,
-main .form form fieldset.cards.horizontal > .checkbox-wrapper > label
-{
+main .form form fieldset.cards.horizontal > .checkbox-wrapper > label {
     min-width: fit-content;
 }
 
 main .form form fieldset.cards > .radio-wrapper > input:checked ~ label,
-main .form form fieldset.cards > .checkbox-wrapper > input:checked ~ label{
+main .form form fieldset.cards > .checkbox-wrapper > input:checked ~ label {
     border: 1px solid #1c3fca;
-    background-color: #F3F6FD;
+    background-color: #f3f6fd;
 }
 
 input::file-selector-button {
@@ -320,7 +321,7 @@ main .form button {
     width: 100%;
 }
 
-main form .file-wrapper > button{
+main form .file-wrapper > button {
     display: flex;
 }
 
@@ -328,7 +329,7 @@ main .form button:hover {
     background: var(--form-button-background-hover-color);
 }
 
-main .submit-wrapper{
+main .submit-wrapper {
     width: var(--form-submit-width);
 }
 
@@ -340,7 +341,7 @@ main .form button:disabled {
 }
 
 main .form form fieldset.cards > .radio-wrapper > input,
-main .form form fieldset.cards > .checkbox-wrapper > input{
+main .form form fieldset.cards > .checkbox-wrapper > input {
     width: 0;
 }
 
@@ -380,17 +381,17 @@ main .form form div[data-variant="addRemoveButtons"] .item-remove {
 }
 
 /* End of Repeatable Styling */
-main .form .file-description{
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  margin-top: 5px;
+main .form .file-description {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 5px;
 }
 
 main .form .file-description .file-description-name {
-  cursor: pointer;
-  text-decoration: underline;
-  flex: 1;
+    cursor: pointer;
+    text-decoration: underline;
+    flex: 1;
 }
 
 main .file-wrapper .file-description button {
@@ -406,8 +407,8 @@ main .file-wrapper .file-description button {
     border-radius: 3px;
 }
 
-main .file-wrapper .file-description button::after{
-    content: 'X';
+main .file-wrapper .file-description button::after {
+    content: "X";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -416,7 +417,7 @@ main .file-wrapper .file-description button::after{
 }
 
 main .form .button-wrapper button {
-    cursor:pointer
+    cursor: pointer;
 }
 
 main .form .button-wrapper button:hover {
@@ -426,7 +427,7 @@ main .form .button-wrapper button:hover {
 }
 
 main .form .button-wrapper button[disabled] {
-    cursor:auto
+    cursor: auto;
 }
 
 main .form .button-wrapper button[disabled]:hover {
@@ -436,29 +437,29 @@ main .form .button-wrapper button[disabled]:hover {
 }
 
 /** Wizard Styling */
-main .form form .wizard  {
-  display: grid;
-  counter-reset: wizard-step-counter;
-  grid-template-columns: minmax(0, 1fr);
-  border: var(--form-wizard-border) solid var(--form-wizard-border-color);
-  background-color: var( --form-wizard-background-color);
-  gap: unset;
-padding: 20px var(--form-wizard-padding);
+main .form form .wizard {
+    display: grid;
+    counter-reset: wizard-step-counter;
+    grid-template-columns: minmax(0, 1fr);
+    border: var(--form-wizard-border) solid var(--form-wizard-border-color);
+    background-color: var(--form-wizard-background-color);
+    gap: unset;
+    padding: 20px var(--form-wizard-padding);
 }
 
-main .form form .wizard > .field-description{
-  width: 100%;
+main .form form .wizard > .field-description {
+    width: 100%;
 }
 
-main .form form .wizard > fieldset > legend{
+main .form form .wizard > fieldset > legend {
     display: none;
 }
 
-main .form form .wizard > fieldset:not(.current-wizard-step){
+main .form form .wizard > fieldset:not(.current-wizard-step) {
     display: none;
 }
 
-main .form form .wizard .wizard-button-wrapper{
+main .form form .wizard .wizard-button-wrapper {
     display: flex;
     justify-content: end;
     gap: 50px;
@@ -467,7 +468,7 @@ main .form form .wizard .wizard-button-wrapper{
     grid-column: span 12;
 }
 
-.wizard-menu-items{
+.wizard-menu-items {
     display: none;
     gap: 50px;
     flex-wrap: wrap;
@@ -507,10 +508,10 @@ main .form form .wizard .wizard-menu-active-item {
     font-weight: 600;
 }
 
-main .form form .wizard .wizard-menu-active-item::before{
-  background: var(--form-wizard-number-color);
-  color: var(--background-color-primary);
-  font-weight: 600;
+main .form form .wizard .wizard-menu-active-item::before {
+    background: var(--form-wizard-number-color);
+    color: var(--background-color-primary);
+    font-weight: 600;
 }
 
 @media (width >= 600px) {
@@ -520,35 +521,35 @@ main .form form .wizard .wizard-menu-active-item::before{
 }
 
 /* wizard title on left */
-main .form form .wizard.left{
-  display: flex;
+main .form form .wizard.left {
+    display: flex;
 }
 
-main .form form .wizard.left .wizard-menu-items{
-  flex-direction: column;
-  width: 300px;
+main .form form .wizard.left .wizard-menu-items {
+    flex-direction: column;
+    width: 300px;
 }
 
 main form .panel-wrapper {
-  display: flex;
-  padding: 0;
-  flex-direction: column;
+    display: flex;
+    padding: 0;
+    flex-direction: column;
 }
 
-main .form form .panel-wrapper{
-  display: grid;
-  grid-template-columns: repeat(var(--form-columns), minmax(0, 1fr));
-  gap: var(--form-field-vert-gap) var(--form-field-horz-gap);
-}
-
-main .form form .repeat-wrapper{
+main .form form .panel-wrapper {
     display: grid;
     grid-template-columns: repeat(var(--form-columns), minmax(0, 1fr));
     gap: var(--form-field-vert-gap) var(--form-field-horz-gap);
 }
 
-main .form form .wizard.left .panel-wrapper{
-  flex: 1;
+main .form form .repeat-wrapper {
+    display: grid;
+    grid-template-columns: repeat(var(--form-columns), minmax(0, 1fr));
+    gap: var(--form-field-vert-gap) var(--form-field-horz-gap);
+}
+
+main .form form .wizard.left .panel-wrapper {
+    flex: 1;
 }
 
 @media (width >= 1200px) {
@@ -583,19 +584,19 @@ main .form .form-message.error-message {
 }
 
 main .form .file-wrapper .file-drag-area {
-  border: 1px dashed var(--border-color);
-  border-radius: 5px;
-  padding: 10px 5px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
+    border: 1px dashed var(--border-color);
+    border-radius: 5px;
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 /* grid css */
-main .form form .field-wrapper .field-description{
-  grid-column: span 12;
+main .form form .field-wrapper .field-description {
+    grid-column: span 12;
 }
 
 main .form form .field-wrapper.col-12 {
@@ -607,7 +608,7 @@ main .form form .field-wrapper.col-11 {
 }
 
 main .form form .field-wrapper.col-10 {
-  grid-column: span 10;
+    grid-column: span 10;
 }
 
 main .form form .field-wrapper.col-9 {
@@ -623,41 +624,51 @@ main .form form .field-wrapper.col-7 {
 }
 
 main .form form .field-wrapper.col-6 {
-      grid-column: span 6;
+    grid-column: span 6;
 }
 
 main .form form .field-wrapper.col-5 {
-      grid-column: span 5;
+    grid-column: span 5;
 }
 
 main .form form .field-wrapper.col-4 {
-      grid-column: span 4;
+    grid-column: span 4;
 }
 
 main .form form .field-wrapper.col-3 {
-      grid-column: span 3;
+    grid-column: span 3;
 }
 
 main .form form .field-wrapper.col-2 {
-      grid-column: span 2;
+    grid-column: span 2;
 }
 
 main .form form .field-wrapper.col-1 {
     grid-column: span 1;
 }
 
-main .form .form-image-wrapper  img {
-  max-width: 100%;
-  height: auto;
+main .form .form-image-wrapper img {
+    max-width: 100%;
+    height: auto;
 }
 
-main form .wizard > .current-wizard-step.panel-wrapper:first-of-type ~ .wizard-button-wrapper > .wizard-button-prev,
-main form .wizard > .current-wizard-step.panel-wrapper:last-of-type ~ .wizard-button-wrapper > .wizard-button-next {
+main
+    form
+    .wizard
+    > .current-wizard-step.panel-wrapper:first-of-type
+    ~ .wizard-button-wrapper
+    > .wizard-button-prev,
+main
+    form
+    .wizard
+    > .current-wizard-step.panel-wrapper:last-of-type
+    ~ .wizard-button-wrapper
+    > .wizard-button-next {
     display: none;
 }
 
-main .form form:not(.edit-mode) .captcha-wrapper{
-    display: none ;
+main .form form:not(.edit-mode) .captcha-wrapper {
+    display: none;
 }
 
 main .form form .radio-group-wrapper.horizontal,
@@ -680,7 +691,7 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
         --form-field-horz-gap: 10px;
     }
 
-    main .form form .wizard  {
+    main .form form .wizard {
         .wizard-menu-items {
             gap: 20px;
         }
@@ -689,21 +700,31 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
     }
 }
 
-main form[data-formpath="/content/frescopa/machines/jcr:content/root/section_183472329/form"], main form[data-formpath="/content/frescopa/en/variations/machines/jcr:content/root/section_183472329/form"]{
+main
+    form[data-formpath="/content/tcs/machines/jcr:content/root/section_183472329/form"],
+main
+    form[data-formpath="/content/tcs/en/variations/machines/jcr:content/root/section_183472329/form"] {
     max-width: 700px;
     margin: 0 auto;
 }
 
-main form[data-formpath="/content/frescopa/machines/jcr:content/root/section_183472329/form"] .field-termsandconditions .checkbox-wrapper{
+main
+    form[data-formpath="/content/tcs/machines/jcr:content/root/section_183472329/form"]
+    .field-termsandconditions
+    .checkbox-wrapper {
     width: 100%;
 }
 
-main form[data-formpath="/content/frescopa/variations/machines/jcr:content/root/section_183472329/form"]{
+main
+    form[data-formpath="/content/tcs/variations/machines/jcr:content/root/section_183472329/form"] {
     max-width: 700px;
     margin: 0 auto;
 }
-  
-main form[data-formpath="/content/frescopa/variations/machines/jcr:content/root/section_183472329/form"] .field-termsandconditions .checkbox-wrapper{
+
+main
+    form[data-formpath="/content/tcs/variations/machines/jcr:content/root/section_183472329/form"]
+    .field-termsandconditions
+    .checkbox-wrapper {
     width: 100%;
 }
 
@@ -711,6 +732,6 @@ main .form form .field-wrapper {
     margin-bottom: 15px;
 }
 
-main .form form .wizard .wizard-button-wrapper .field-wrapper{
+main .form form .wizard .wizard-button-wrapper .field-wrapper {
     flex: unset;
 }
