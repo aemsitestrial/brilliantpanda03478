@@ -213,7 +213,7 @@ The list model displays conditional fields according to `listType`.
 | `fixedText`   | Display text; repeat in the same order as links. |
 | `fixedTarget` | Select whether an item opens in a new tab.       |
 
-#### Search
+#### Search based List
 
 | Field         | Purpose                                                |
 | ------------- | ------------------------------------------------------ |
@@ -221,7 +221,7 @@ The list model displays conditional fields according to `listType`.
 | `searchQuery` | Space-separated terms matched against indexed content. |
 | `searchIn`    | Parent path used as the search scope.                  |
 
-#### Tags
+#### Tags based list
 
 | Field            | Purpose                            |
 | ---------------- | ---------------------------------- |
