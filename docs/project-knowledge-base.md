@@ -13,25 +13,26 @@ The repository is document-first. Blocks should render useful authored markup be
 
 ## Repository map
 
-| Path                        | Responsibility                                                                    |
-| --------------------------- | --------------------------------------------------------------------------------- |
-| `blocks/`                   | Block JavaScript, CSS, and XWalk/DA model fragments.                              |
-| `scripts/aem.js`            | Shared EDS decoration, loading, instrumentation, and utility functions.           |
-| `scripts/scripts.js`        | Page bootstrap, eager/lazy loading, header/footer loading, and editor bootstrap.  |
-| `scripts/decorate-main.js`  | Shared main-content decoration.                                                   |
-| `scripts/editor-support.js` | Universal Editor content patch, update, move, copy, and selection handling.       |
-| `scripts/endpointconfig.js` | AEM author/publish endpoint and authoring-mode detection.                         |
-| `models/`                   | Shared page, section, text, title, image, button, and component metadata sources. |
-| `component-definition.json` | Generated component definitions. Do not edit manually.                            |
-| `component-models.json`     | Generated component models. Do not edit manually.                                 |
-| `component-filters.json`    | Generated component filters. Do not edit manually.                                |
-| `styles/`                   | Global, font, and lazy-loaded styles.                                             |
-| `tools/sidekick/`           | Sidekick configuration.                                                           |
-| `fstab.yaml`                | AEM/EDS content mount point.                                                      |
-| `paths.json`                | Content and configuration path mappings.                                          |
-| `helix-query.yaml`          | EDS query-index configuration.                                                    |
-| `helix-sitemap.yaml`        | Sitemap source and destination configuration.                                     |
-| `.vscode/mcp.json`          | Workspace Figma MCP server configuration.                                         |
+| Path                                | Responsibility                                                                                |
+| ----------------------------------- | --------------------------------------------------------------------------------------------- |
+| `blocks/`                           | Block JavaScript, CSS, and XWalk/DA model fragments.                                          |
+| `scripts/aem.js`                    | Shared EDS decoration, loading, instrumentation, and utility functions.                       |
+| `scripts/scripts.js`                | Page bootstrap, eager/lazy loading, header/footer loading, and editor bootstrap.              |
+| `scripts/decorate-main.js`          | Shared main-content decoration.                                                               |
+| `scripts/editor-support.js`         | Universal Editor content patch, update, move, copy, and selection handling.                   |
+| `scripts/endpointconfig.js`         | AEM author/publish endpoint and authoring-mode detection.                                     |
+| `scripts/target-personalization.js` | Reusable Adobe Target decisioning, validation, configuration, attributes, and display helper. |
+| `models/`                           | Shared page, section, text, title, image, button, and component metadata sources.             |
+| `component-definition.json`         | Generated component definitions. Do not edit manually.                                        |
+| `component-models.json`             | Generated component models. Do not edit manually.                                             |
+| `component-filters.json`            | Generated component filters. Do not edit manually.                                            |
+| `styles/`                           | Global, font, and lazy-loaded styles.                                                         |
+| `tools/sidekick/`                   | Sidekick configuration.                                                                       |
+| `fstab.yaml`                        | AEM/EDS content mount point.                                                                  |
+| `paths.json`                        | Content and configuration path mappings.                                                      |
+| `helix-query.yaml`                  | EDS query-index configuration.                                                                |
+| `helix-sitemap.yaml`                | Sitemap source and destination configuration.                                                 |
+| `.vscode/mcp.json`                  | Workspace Figma MCP server configuration.                                                     |
 
 ## Block contract
 
@@ -103,12 +104,51 @@ DA Live uses the DA plugin definition and field mapping. DA-compatible blocks sh
 
 ## Data and remote services
 
+### Adobe Target personalization
+
+The existing `list` block supports anonymous Adobe Target personalization as an opt-in enhancement. Enable it in the List model with `personalizationEnabled`; the default is disabled.
+
+- The block calls the Adobe Platform Web SDK through `window.alloy`.
+- Adobe Target resolves the visitor profile using the existing Adobe-managed ECID.
+- The project does not store persona, intent, confidence, or expiry in browser storage or custom cookies.
+- The author-configured List is rendered first and remains the fallback source of truth.
+- Target content is limited to items already returned by the author’s List configuration.
+- A valid decision must be qualified, unexpired, and match `sourcePath`/`contentTags`.
+- `decisioning.propositionDisplay` is sent only after personalized content is rendered.
+- If Alloy, Target, the network, the timeout, proposition validation, or content matching fails, the default List remains visible.
+
+The List block exposes only this personalization authoring field:
+
+| Field                    | Default | Purpose                     |
+| ------------------------ | ------- | --------------------------- |
+| `personalizationEnabled` | `false` | Enables Target decisioning. |
+
+Runtime settings are read from `window.hlx.config.target.list` or `window.hlx.config.target`:
+
+| Setting           | Default                 | Purpose                                     |
+| ----------------- | ----------------------- | ------------------------------------------- |
+| `decisionScope`   | `tcs-personalized-list` | Target decision scope.                      |
+| `decisionTimeout` | `1500`                  | Maximum wait in milliseconds.               |
+| `allowedPersonas` | empty                   | Optional comma-separated runtime allowlist. |
+| `allowedIntents`  | empty                   | Optional comma-separated runtime allowlist. |
+
+Debug attributes are written only for enabled personalization: `data-personalization`, `data-personalization-status`, and `data-persona`.
+
+Future blocks should reuse `getTargetConfig('<block-name>')`, `getDecision(config)`, `setPersonalizationAttributes(element, enabled, status, persona)`, and `sendPropositionDisplay(decision)`. Keep content matching and rendering block-specific, and keep the authoring toggle as the only block-level personalization field unless a future requirement explicitly requires another field.
+
 ### Query index
 
 `blocks/list/list.js` reads `/query-index.json` and falls back to `/sitemap.json`.
 
 The current `helix-query.yaml` explicitly indexes:
 
+- `title`
+- `description`
+- `image`
+- `imageAlt`
+- `tags`
+- `persona`
+- `intent`
 - `lastModified`
 - `robots`
 
@@ -120,6 +160,8 @@ List search and tag filtering also expect index records to expose fields such as
 - `tags` or `keywords`
 - `lastModified`
 - optional image/thumbnail fields
+
+Target personalization does not replace the Query Index. It only selects from the author-configured index results. Ensure the index exposes the fields needed by the proposition, including `path`, `tags`, `persona`, `intent`, `description`, and image fields where applicable.
 
 If those properties are not present in the generated index, client-side filtering cannot discover them. For true AEM full-text search, relevance ranking, permissions, or large datasets, use a server-side search endpoint instead of downloading the entire index.
 

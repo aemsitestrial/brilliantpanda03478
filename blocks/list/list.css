@@ -20,6 +20,14 @@
     margin-bottom: 8px;
 }
 
+.list[data-personalization-status="personalized"]
+    .list-item-content
+    picture
+    img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
 .list-item-content h3 {
     margin: 0;
 }

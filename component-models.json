@@ -5396,6 +5396,21 @@
       },
       {
         "component": "container",
+        "name": "personalization",
+        "label": "Adobe Target Personalization",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "boolean",
+            "name": "personalizationEnabled",
+            "label": "Enable Personalization",
+            "value": false,
+            "valueType": "boolean"
+          }
+        ]
+      },
+      {
+        "component": "container",
         "name": "childPages",
         "label": "Child Pages",
         "collapsible": false,

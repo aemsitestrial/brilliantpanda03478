@@ -244,6 +244,16 @@ The list model displays conditional fields according to `listType`.
 | `dateFormat`      | Date pattern such as `MMMM d, yyyy`.        |
 | `id`              | Optional unique HTML ID.                    |
 
+#### Anonymous Adobe Target Personalization
+
+Personalization is optional and disabled by default. When enabled, Adobe Target uses the existing Adobe-managed ECID; authors do not enter or maintain visitor identity data.
+
+| Field                    | Purpose                     |
+| ------------------------ | --------------------------- |
+| `personalizationEnabled` | Enables Target decisioning. |
+
+The authored List always renders first. Personalization is applied only when Target returns a qualified, unexpired proposition with matching indexed content. Otherwise the authored List remains unchanged. The decision scope, timeout, and optional allowlists are runtime configuration, not authoring fields.
+
 Search and tag results require the relevant fields to be available in `query-index.json`.
 
 ### Modal

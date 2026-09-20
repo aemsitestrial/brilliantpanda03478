@@ -25,6 +25,10 @@ Furthremore, we encourage you to watch the recordings of any of our previous pre
 - [Author markup reference](docs/author-markup.md) - block names, fields, and authoring examples.
 - [Project knowledge base](docs/project-knowledge-base.md) - architecture, authoring modes, development standards, and troubleshooting.
 
+### Anonymous List personalization
+
+The existing `list` block supports optional Adobe Target decisioning for anonymous visitors through the Adobe Platform Web SDK. Personalization is disabled by default; the author-configured list remains the fallback whenever Target, Alloy, the network, or proposition validation is unavailable.
+
 ## Prerequisites
 
 - nodejs 18.3.x or newer

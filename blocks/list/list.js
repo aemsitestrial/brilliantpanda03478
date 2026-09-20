@@ -1,4 +1,10 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import {
+  getDecision,
+  getTargetConfig,
+  sendPropositionDisplay,
+  setPersonalizationAttributes,
+} from '../../scripts/target-personalization.js';
 
 const INDEX_SOURCES = ['/query-index.json', '/sitemap.json'];
 
@@ -96,6 +102,10 @@ function getImage(item) {
   return item.image || item.imageUrl || item.thumbnail || '';
 }
 
+function getContentTags(item) {
+  return getTags(item).map((tag) => tag.toLowerCase());
+}
+
 function formatDate(value, format) {
   const date = new Date(value);
   if (Number.isNaN(date.valueOf())) return value;
@@ -188,6 +198,23 @@ function filterItems(items, config) {
   return config.maxItems > 0 ? result.slice(0, config.maxItems) : result;
 }
 
+function filterPersonalizedItems(items, proposition) {
+  const sourcePath = proposition.sourcePath && normalizePath(proposition.sourcePath);
+  const contentTags = Array.isArray(proposition.contentTags)
+    ? proposition.contentTags.map((tag) => String(tag).toLowerCase())
+    : [];
+  const matches = items.filter((item) => {
+    const path = normalizePath(getPath(item));
+    const hasSource = !sourcePath || path === sourcePath || path.startsWith(`${sourcePath}/`);
+    const tags = getContentTags(item);
+    const hasTags = !contentTags.length || contentTags.every((tag) => tags.includes(tag));
+    return hasSource && hasTags;
+  });
+  return proposition.maxItems > 0
+    ? matches.slice(0, proposition.maxItems)
+    : matches;
+}
+
 function getFixedItems(block) {
   const source = block.querySelector('[data-aue-prop="fixedItems"]') || block;
   const authoredLinks = [...source.querySelectorAll('a[href]')];
@@ -259,6 +286,27 @@ function renderItem(item, config) {
   return li;
 }
 
+function renderList(block, items, config, status = null, decision = null) {
+  const list = document.createElement('ul');
+  list.className = 'list-items';
+  items.forEach((item) => list.append(renderItem(item, config)));
+  block.replaceChildren(list);
+
+  setPersonalizationAttributes(
+    block,
+    config.personalizationEnabled,
+    status,
+    decision?.data?.persona,
+  );
+}
+
+async function buildDefaultList(block, config) {
+  if (['fixed', 'static'].includes(config.listType)) {
+    return getFixedItems(block);
+  }
+  return filterItems(await loadIndex(), config);
+}
+
 export default async function decorate(block) {
   const config = {
     listType: getField(block, 'listType', 'children').toLowerCase(),
@@ -277,14 +325,22 @@ export default async function decorate(block) {
     showDate: getBoolean(block, 'showDate'),
     displayAsTeaser: getBoolean(block, 'displayAsTeaser'),
     dateFormat: getField(block, 'dateFormat', 'MMMM d, yyyy'),
+    personalizationEnabled: getBoolean(block, 'personalizationEnabled'),
+    ...getTargetConfig('list'),
   };
-  const list = document.createElement('ul');
-  list.className = 'list-items';
-  const items = ['fixed', 'static'].includes(config.listType)
-    ? getFixedItems(block)
-    : filterItems(await loadIndex(), config);
-  items.forEach((item) => list.append(renderItem(item, config)));
+  const defaultItems = await buildDefaultList(block, config);
   const id = getField(block, 'id');
   if (id) block.id = id;
-  block.replaceChildren(list);
+  renderList(block, defaultItems, config, 'fallback');
+
+  if (!config.personalizationEnabled) return;
+
+  const decision = await getDecision(config);
+  const personalizedItems = decision
+    ? filterPersonalizedItems(defaultItems, decision.data)
+    : [];
+  if (!decision || !personalizedItems.length) return;
+
+  renderList(block, personalizedItems, config, 'personalized', decision);
+  await sendPropositionDisplay(decision);
 }
