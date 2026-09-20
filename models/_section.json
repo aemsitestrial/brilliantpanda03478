@@ -44,10 +44,14 @@
       "id": "section",
       "components": [
         "accordion",
+	"article",
+	"blog-list",
         "button",
         "cards",
         "carousel",
         "columns",
+	"dm-video",
+	"dm-scene7-template",
         "embed",
         "fragment",
         "form",
@@ -59,6 +63,7 @@
         "table",
         "text",
         "title",
+	"teaser",
         "video"
       ]
     }

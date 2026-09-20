@@ -25,6 +25,7 @@
           "valueType": "string",
           "name": "embed_placeholder",
           "label": "Placeholder Image",
+          "description": "Optional image shown before playback.",
           "multi": false
         },
         {

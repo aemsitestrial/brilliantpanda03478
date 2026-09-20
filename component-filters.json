@@ -9,10 +9,14 @@
     "id": "section",
     "components": [
       "accordion",
+      "article",
+      "blog-list",
       "button",
       "cards",
       "carousel",
       "columns",
+      "dm-video",
+      "dm-scene7-template",
       "embed",
       "fragment",
       "form",
@@ -24,6 +28,7 @@
       "table",
       "text",
       "title",
+      "teaser",
       "video"
     ]
   },
@@ -58,6 +63,36 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "form",
+    "components": [
+      "captcha",
+      "checkbox",
+      "checkbox-group",
+      "date-input",
+      "drop-down",
+      "email",
+      "file-input",
+      "form-accordion",
+      "form-button",
+      "form-fragment",
+      "form-image",
+      "form-modal",
+      "form-reset-button",
+      "form-submit-button",
+      "number-input",
+      "panel",
+      "password",
+      "plain-text",
+      "radio-group",
+      "range",
+      "rating",
+      "telephone-input",
+      "text-input",
+      "tnc",
+      "wizard"
     ]
   },
   {

@@ -173,6 +173,8 @@ function attachEventListners(main) {
   }));
 
   main?.addEventListener('aue:ui-select', handleSelection);
+  const module = await import('./form-editor-support.js');
+  module.attachEventListners(main);
 }
 
 attachEventListners(document.querySelector('main'));
