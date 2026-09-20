@@ -22,7 +22,9 @@ function getState(block) {
     return block.dataset.activeSlide;
   }
   if (block.matches('.tabs')) {
-    const [currentPanel] = block.querySelectorAll('.tabs-panel[aria-hidden="false"]');
+    const [currentPanel] = block.querySelectorAll(
+      '.tabs-panel[aria-hidden="false"]',
+    );
     return currentPanel?.dataset.aueResource;
   }
 
@@ -64,13 +66,20 @@ async function applyChanges(event) {
   // load dompurify
   await loadScript(`${window.hlx.codeBasePath}/scripts/dompurify.min.js`);
 
-  const sanitizedContent = window.DOMPurify.sanitize(content, { USE_PROFILES: { html: true } });
-  const parsedUpdate = new DOMParser().parseFromString(sanitizedContent, 'text/html');
+  const sanitizedContent = window.DOMPurify.sanitize(content, {
+    USE_PROFILES: { html: true },
+  });
+  const parsedUpdate = new DOMParser().parseFromString(
+    sanitizedContent,
+    'text/html',
+  );
   const element = document.querySelector(`[data-aue-resource="${resource}"]`);
 
   if (element) {
     if (element.matches('main')) {
-      const newMain = parsedUpdate.querySelector(`[data-aue-resource="${resource}"]`);
+      const newMain = parsedUpdate.querySelector(
+        `[data-aue-resource="${resource}"]`,
+      );
       newMain.style.display = 'none';
       element.insertAdjacentElement('afterend', newMain);
       decorateMain(newMain);
@@ -83,11 +92,14 @@ async function applyChanges(event) {
       return true;
     }
 
-    const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
+    const block = element.parentElement?.closest('.block[data-aue-resource]')
+      || element?.closest('.block[data-aue-resource]');
     if (block) {
       const state = getState(block);
       const blockResource = block.getAttribute('data-aue-resource');
-      const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
+      const newBlock = parsedUpdate.querySelector(
+        `[data-aue-resource="${blockResource}"]`,
+      );
       if (newBlock) {
         newBlock.style.display = 'none';
         block.insertAdjacentElement('afterend', newBlock);
@@ -103,7 +115,9 @@ async function applyChanges(event) {
       }
     } else {
       // sections and default content, may be multiple in the case of richtext
-      const newElements = parsedUpdate.querySelectorAll(`[data-aue-resource="${resource}"],[data-richtext-resource="${resource}"]`);
+      const newElements = parsedUpdate.querySelectorAll(
+        `[data-aue-resource="${resource}"],[data-richtext-resource="${resource}"]`,
+      );
       if (newElements.length) {
         const { parentElement } = element;
         if (element.matches('.section')) {
@@ -143,12 +157,16 @@ function handleSelection(event) {
 
     if (block && block.matches('.accordion')) {
       // close all details
-      const details = element.matches('details') ? element : element.querySelector('details');
+      const details = element.matches('details')
+        ? element
+        : element.querySelector('details');
       setState(block, [details.dataset.aueResource]);
     }
 
     if (block && block.matches('.carousel')) {
-      const slideIndex = [...block.querySelectorAll('.carousel-slide')].findIndex((slide) => slide === element);
+      const slideIndex = [
+        ...block.querySelectorAll('.carousel-slide'),
+      ].findIndex((slide) => slide === element);
       setState(block, slideIndex);
     }
 
@@ -158,7 +176,7 @@ function handleSelection(event) {
   }
 }
 
-function attachEventListners(main) {
+async function attachEventListners(main) {
   [
     'aue:content-patch',
     'aue:content-update',
@@ -185,4 +203,7 @@ decorateRichtext();
 // in cases where the block decoration is not done in one synchronous iteration we need to listen
 // for new richtext-instrumented elements. this happens for example when using experimentation.
 const observer = new MutationObserver(() => decorateRichtext());
-observer.observe(document, { attributeFilter: ['data-richtext-prop'], subtree: true });
+observer.observe(document, {
+  attributeFilter: ['data-richtext-prop'],
+  subtree: true,
+});

@@ -1,7 +1,7 @@
 .blog-list {
     margin-top: 40px;
 
-    ul { 
+    ul {
         display: flex;
         flex-flow: row wrap;
         gap: 20px;
@@ -13,10 +13,9 @@
     li {
         list-style: none;
         border-radius: 12px;
-        box-shadow: 0 10px 20px rgba(0 0 0 / 12%);
+        box-shadow: 0 10px 20px rgb(0 0 0 / 12%);
         position: relative;
         max-width: 440px;
-
 
         h5 {
             padding: 10px 20px;
@@ -24,7 +23,7 @@
         }
     }
 
-     ul > li img {
+    ul > li img {
         min-width: 440px;
         max-height: 360px;
         height: auto;
@@ -32,6 +31,5 @@
         object-fit: cover;
         border-radius: 10px 10px 0 0;
         overflow: hidden;
-
     }
 }

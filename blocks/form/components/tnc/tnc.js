@@ -1,5 +1,5 @@
 const textIntersectionClass = 'tnc__text-intersect';
-const textDecorationClass = 'tnc__text-decoration';
+const textDecorationClass = 'tnc-text-decoration';
 
 class TermsAndConditions {
   constructor(fieldDiv, fieldJson) {
@@ -23,8 +23,11 @@ class TermsAndConditions {
     if (helpText) {
       this.fieldDiv.append(helpText);
     }
-    if (!textWrapper) { // rendition does not have a plain-text-wrapper => link rendition of TnC
-      console.debug('No plain-text found in TnC field. Assuming Link based rendition and Skipping decoration.');
+    if (!textWrapper) {
+      // rendition does not have a plain-text-wrapper => link rendition of TnC
+      console.debug(
+        'No plain-text found in TnC field. Assuming Link based rendition and Skipping decoration.',
+      );
       this.fieldDiv.classList.add('link');
       return;
     }
@@ -36,19 +39,24 @@ class TermsAndConditions {
   }
 
   handleScroll() {
-    const intersection = this.fieldDiv.querySelector(`.${textIntersectionClass}`);
+    const intersection = this.fieldDiv.querySelector(
+      `.${textIntersectionClass}`,
+    );
     if (intersection) {
-      const io = new IntersectionObserver(([{ isIntersecting }]) => {
-        if (isIntersecting) {
-          /*
-          * TODO: Enable the checkboxes that are disabled by default via the model.
-          *  Currently they are enabled by default
-          * */
-          io.unobserve(intersection);
-        }
-      }, {
-        threshold: [1],
-      });
+      const io = new IntersectionObserver(
+        ([{ isIntersecting }]) => {
+          if (isIntersecting) {
+            /*
+             * TODO: Enable the checkboxes that are disabled by default via the model.
+             *  Currently they are enabled by default
+             * */
+            io.unobserve(intersection);
+          }
+        },
+        {
+          threshold: [1],
+        },
+      );
       io.observe(intersection);
     }
   }
