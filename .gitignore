@@ -7,5 +7,6 @@ helix-importer-ui
 .DS_Store
 *.bak
 .idea
+.vscode
 localhost.pem
 localhost-key.pem
