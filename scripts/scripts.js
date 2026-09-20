@@ -1,10 +1,6 @@
 import {
   loadHeader,
   loadFooter,
-  decorateButtons,
-  decorateIcons,
-  decorateSections,
-  decorateBlocks,
   decorateTemplateAndTheme,
   getMetadata,
   waitForFirstImage,
@@ -12,6 +8,9 @@ import {
   loadSections,
   loadCSS,
 } from './aem.js';
+import decorateMain from './decorate-main.js';
+
+export { default as decorateMain } from './decorate-main.js';
 
 /**
  * Moves all the attributes from a given elmenet to another given element.
@@ -43,7 +42,9 @@ export function moveInstrumentation(from, to) {
     to,
     [...from.attributes]
       .map(({ nodeName }) => nodeName)
-      .filter((attr) => attr.startsWith('data-aue-') || attr.startsWith('data-richtext-')),
+      .filter(
+        (attr) => attr.startsWith('data-aue-') || attr.startsWith('data-richtext-'),
+      ),
   );
 }
 
@@ -64,51 +65,12 @@ function autolinkModals(doc) {
     const origin = e.target.closest('a');
     if (origin && origin.href && origin.href.includes('/modals/')) {
       e.preventDefault();
-      const { openModal } = await import(`${window.hlx.codeBasePath}/blocks/modal/modal.js`);
+      const { openModal } = await import(
+        `${window.hlx.codeBasePath}/blocks/modal/modal.js`
+      );
       openModal(origin.href);
     }
   });
-}
-
-/**
- * Builds all synthetic blocks in a container element.
- * @param {Element} main The container element
- */
-function buildAutoBlocks() {
-  try {
-    // TODO: add auto block, if needed
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Auto Blocking failed', error);
-  }
-}
-
-function a11yLinks(main) {
-  const links = main.querySelectorAll('a');
-  links.forEach((link) => {
-    let label = link.textContent;
-    if (!label && link.querySelector('span.icon')) {
-      const icon = link.querySelector('span.icon');
-      label = icon ? icon.classList[1]?.split('-')[1] : label;
-    }
-    link.setAttribute('aria-label', label);
-  });
-}
-
-/**
- * Decorates the main element.
- * @param {Element} main The main element
- */
-// eslint-disable-next-line import/prefer-default-export
-export function decorateMain(main) {
-  // hopefully forward compatible button decoration
-  decorateButtons(main);
-  decorateIcons(main);
-  buildAutoBlocks(main);
-  decorateSections(main);
-  decorateBlocks(main);
-  // add aria-label to links
-  a11yLinks(main);
 }
 
 /**
@@ -169,8 +131,21 @@ function loadDelayed() {
   // load anything that can be postponed to the latest here
 }
 
+async function loadUniversalEditorSupport() {
+  const params = new URLSearchParams(window.location.search);
+  const isUniversalEditor = document.documentElement.classList.contains('adobe-ue-edit')
+    || params.get('wcmmode') === 'edit'
+    || params.get('wcmmode') === 'preview'
+    || window.location.pathname.includes('/editor.html');
+  if (isUniversalEditor) {
+    // eslint-disable-next-line import/no-cycle
+    await import('./editor-support.js');
+  }
+}
+
 async function loadPage() {
   await loadEager(document);
+  await loadUniversalEditorSupport();
   await loadLazy(document);
   loadDelayed();
 }

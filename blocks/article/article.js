@@ -1,39 +1,81 @@
 import { getAEMPublish, getAEMAuthor } from '../../scripts/endpointconfig.js';
 
+const escapeHtml = (value = '') => String(value)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#39;');
+
+function getFallbackArticle(block) {
+  const title = block.querySelector('h1, h2, h3, h4, h5')?.textContent?.trim() || 'Article';
+  const description = block.querySelector('p')?.textContent?.trim()
+    || 'Article content is available in the authored document.';
+
+  return {
+    title,
+    content: {
+      plaintext: description,
+    },
+  };
+}
+
 /* eslint-disable no-underscore-dangle */
 export default async function decorate(block) {
   const aempublishurl = getAEMPublish();
   const aemauthorurl = getAEMAuthor();
   const persistedquery = '/graphql/execute.json/frescopa/ArticleByPath';
-  const articlepath = block.querySelector(':scope div:nth-child(1) > div a').innerHTML.trim();
-  let variationname = block.querySelector(':scope div:nth-child(2) > div').innerHTML.trim();
-  if (!variationname) {
-    variationname = 'main';
+  const sourceLink = block.querySelector('a[href]');
+  const rawArticlePath = sourceLink
+    ? new URL(sourceLink.href, window.location.origin).pathname
+    : '';
+  const articlepath = rawArticlePath || block.dataset?.path || '';
+  const variationname = block.querySelector(':scope div:nth-child(2) > div')?.innerHTML?.trim()
+    || 'main';
+
+  if (!articlepath || (!aempublishurl && !aemauthorurl)) {
+    const fallback = getFallbackArticle(block);
+    block.innerHTML = `
+      <div class='article-content' data-aue-type='text'>
+        <div>
+          <h4 class='headline'>${escapeHtml(fallback.title)}</h4>
+          <p class='detail'>${escapeHtml(fallback.content.plaintext)}</p>
+        </div>
+      </div>
+    `;
+    return;
   }
 
-  const url = window.location && window.location.origin && window.location.origin.includes('author')
-    ? `${aemauthorurl}${persistedquery};path=${articlepath};variation=${variationname};ts=${Math.random() * 1000}`
-    : `${aempublishurl}${persistedquery};path=${articlepath};variation=${variationname};ts=${Math.random() * 1000}`;
-  const options = { credentials: 'include' };
+  const baseUrl = window.location
+    && window.location.origin
+    && window.location.origin.includes('author')
+    ? aemauthorurl
+    : aempublishurl;
 
-  const cfReq = await fetch(url, options)
-    .then((response) => response.json())
-    .then((contentfragment) => {
-      let path = '';
-      if (contentfragment.data) {
-        path = contentfragment.data.articleByPath.item;
+  const url = `${baseUrl}${persistedquery};path=${encodeURIComponent(articlepath)};variation=${encodeURIComponent(variationname)};ts=${Date.now()}`;
+
+  let cfReq = getFallbackArticle(block);
+
+  try {
+    const response = await fetch(url, { credentials: 'include' });
+    if (response.ok) {
+      const contentfragment = await response.json();
+      if (contentfragment?.data?.articleByPath?.item) {
+        cfReq = contentfragment.data.articleByPath.item;
       }
-      return path;
-    });
+    }
+  } catch (error) {
+    // Gracefully fall back to authored content if the endpoint is unavailable.
+  }
 
-  const itemId = `urn:aemconnection:${articlepath}/jcr:content/data/master`;
+  const itemId = `urn:aemconnection:${encodeURIComponent(articlepath)}/jcr:content/data/master`;
 
   block.innerHTML = `
-  <div class='article-content' data-aue-resource=${itemId} data-aue-label="article content fragment" data-aue-type="reference" data-aue-filter="cf">
+    <div class='article-content' data-aue-resource="${itemId}" data-aue-label="article content fragment" data-aue-type="reference" data-aue-filter="cf">
       <div>
-          <h4 data-aue-prop="headline" data-aue-label="headline" data-aue-type="text" class='headline'>${cfReq.title}</h4>
-          <p data-aue-prop="detail" data-aue-label="detail" data-aue-type="richtext" class='detail'>${cfReq.content.plaintext}</p>
+        <h4 data-aue-prop="headline" data-aue-label="headline" data-aue-type="text" class='headline'>${escapeHtml(cfReq.title || 'Article')}</h4>
+        <p data-aue-prop="detail" data-aue-label="detail" data-aue-type="richtext" class='detail'>${escapeHtml(cfReq.content?.plaintext || cfReq.content || 'Article content is available in the authored document.')}</p>
       </div>
-  </div>
-`;
+    </div>
+  `;
 }

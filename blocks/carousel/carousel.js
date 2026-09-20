@@ -1,5 +1,6 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { fetchPlaceholders } from '../../scripts/placeholders.js';
+import showSlide from '../../scripts/carousel-support.js';
 
 function updateActiveSlide(slide) {
   const block = slide.closest('.carousel');
@@ -29,19 +30,7 @@ function updateActiveSlide(slide) {
   });
 }
 
-export function showSlide(block, slideIndex = 0, behavior = 'smooth') {
-  const slides = block.querySelectorAll('.carousel-slide');
-  let realSlideIndex = slideIndex < 0 ? slides.length - 1 : slideIndex;
-  if (slideIndex >= slides.length) realSlideIndex = 0;
-  const activeSlide = slides[realSlideIndex];
-
-  activeSlide.querySelectorAll('a').forEach((link) => link.removeAttribute('tabindex'));
-  block.querySelector('.carousel-slides').scrollTo({
-    top: 0,
-    left: activeSlide.offsetLeft,
-    behavior,
-  });
-}
+export { showSlide };
 
 function bindEvents(block) {
   const slideIndicators = block.querySelector('.carousel-slide-indicators');
@@ -61,11 +50,14 @@ function bindEvents(block) {
     showSlide(block, parseInt(block.dataset.activeSlide, 10) + 1);
   });
 
-  const slideObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) updateActiveSlide(entry.target);
-    });
-  }, { threshold: 0.5 });
+  const slideObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) updateActiveSlide(entry.target);
+      });
+    },
+    { threshold: 0.5 },
+  );
   block.querySelectorAll('.carousel-slide').forEach((slide) => {
     slideObserver.observe(slide);
   });
@@ -78,7 +70,9 @@ function createSlide(row, slideIndex, carouselId) {
   slide.classList.add('carousel-slide');
 
   row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
-    column.classList.add(`carousel-slide-${colIdx === 0 ? 'image' : 'content'}`);
+    column.classList.add(
+      `carousel-slide-${colIdx === 0 ? 'image' : 'content'}`,
+    );
     slide.append(column);
   });
 
@@ -100,7 +94,10 @@ export default async function decorate(block) {
   const placeholders = await fetchPlaceholders();
 
   block.setAttribute('role', 'region');
-  block.setAttribute('aria-roledescription', placeholders.carousel || 'Carousel');
+  block.setAttribute(
+    'aria-roledescription',
+    placeholders.carousel || 'Carousel',
+  );
 
   const container = document.createElement('div');
   container.classList.add('carousel-slides-container');
@@ -112,7 +109,10 @@ export default async function decorate(block) {
   let slideIndicators;
   if (!isSingleSlide) {
     const slideIndicatorsNav = document.createElement('nav');
-    slideIndicatorsNav.setAttribute('aria-label', placeholders.carouselSlideControls || 'Carousel Slide Controls');
+    slideIndicatorsNav.setAttribute(
+      'aria-label',
+      placeholders.carouselSlideControls || 'Carousel Slide Controls',
+    );
     slideIndicators = document.createElement('ol');
     slideIndicators.classList.add('carousel-slide-indicators');
     slideIndicatorsNav.append(slideIndicators);

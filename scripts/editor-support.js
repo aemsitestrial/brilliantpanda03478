@@ -1,4 +1,5 @@
-import { showSlide } from '../blocks/carousel/carousel.js';
+/* eslint-disable import/no-cycle */
+import showSlide from './carousel-support.js';
 import {
   decorateBlock,
   decorateBlocks,
@@ -10,7 +11,8 @@ import {
   loadSections,
 } from './aem.js';
 import { decorateRichtext } from './editor-support-rte.js';
-import { decorateMain } from './scripts.js';
+import { isAuthoringMode } from './endpointconfig.js';
+import decorateMain from './decorate-main.js';
 
 function getState(block) {
   if (block.matches('.accordion')) {
@@ -59,7 +61,7 @@ async function applyChanges(event) {
     || detail?.request?.to?.container?.resource; // move in sections
   if (!resource) return false;
   const updates = detail?.response?.updates;
-  if (!updates.length) return false;
+  if (!updates?.length) return false;
   const { content } = updates[0];
   if (!content) return false;
 
@@ -152,6 +154,7 @@ function handleSelection(event) {
 
   if (resource) {
     const element = document.querySelector(`[data-aue-resource="${resource}"]`);
+    if (!element) return;
     const block = element.parentElement?.closest('.block[data-aue-resource]')
       || element?.closest('.block[data-aue-resource]');
 
@@ -160,7 +163,7 @@ function handleSelection(event) {
       const details = element.matches('details')
         ? element
         : element.querySelector('details');
-      setState(block, [details.dataset.aueResource]);
+      if (details) setState(block, [details.dataset.aueResource]);
     }
 
     if (block && block.matches('.carousel')) {
@@ -195,7 +198,9 @@ async function attachEventListners(main) {
   module.attachEventListners(main);
 }
 
-attachEventListners(document.querySelector('main'));
+if (isAuthoringMode()) {
+  attachEventListners(document.querySelector('main'));
+}
 
 // decorate rich text
 // this has to happen after decorateMain(), and everythime decorateBlocks() is called

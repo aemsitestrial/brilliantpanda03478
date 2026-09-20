@@ -1,38 +1,60 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-export default async function decorate(block) {
-  const indexResponse = await fetch('/../sitemap.json');
-  if (!indexResponse.ok) {
-    console.error('Failed to fetch sitemap.json:', indexResponse.statusText);
-    return;
-  }
+function renderPosts(container, posts) {
+  posts.forEach((post) => {
+    if (!post || (!post.path && !post.href)) {
+      return;
+    }
 
-  const index = await indexResponse.json();
+    const eager = false;
+    const title = post.title || 'Article';
+    const href = post.path || post.href;
+    const image = post.image || post.thumbnail || '';
+    const li = document.createElement('li');
+    const picture = image
+      ? createOptimizedPicture(image, title, eager, [{ width: '300' }])
+      : null;
+    const pictureTag = picture ? picture.outerHTML : '';
 
-  const container = document.createElement('ul');
-
-  index.data
-    .forEach((post) => {
-      // If the post is not from Blog category, skip it
-      if (post.category !== 'blog') {
-        return;
-      }
-
-      const eager = false;
-      const title = '';
-      const li = document.createElement('li');
-      const picture = createOptimizedPicture(post.image, post.title || title, eager, [{ width: '300' }]);
-      const pictureTag = picture.outerHTML;
-
-      li.innerHTML = `
-      <a href="${post.path}">
+    li.innerHTML = `
+      <a href="${href}">
         ${pictureTag}
-        <h5>${post.title}</h5>
-        
+        <h5>${title}</h5>
       </a>
     `;
-      container.append(li);
-    });
+    container.append(li);
+  });
+}
+
+export default async function decorate(block) {
+  const container = document.createElement('ul');
+
+  try {
+    const indexResponse = await fetch('/../sitemap.json');
+    if (indexResponse.ok) {
+      const index = await indexResponse.json();
+      const posts = Array.isArray(index?.data)
+        ? index.data.filter((post) => post?.category === 'blog')
+        : [];
+      if (posts.length) {
+        renderPosts(container, posts);
+        block.append(container);
+        return;
+      }
+    }
+  } catch (error) {
+    // Fall back to any authored content already present in the block.
+  }
+
+  const authoredLinks = [...block.querySelectorAll('a[href]')].map((link) => ({
+    path: link.getAttribute('href'),
+    title: link.textContent.trim() || 'Article',
+    image: link.querySelector('img')?.getAttribute('src') || '',
+  }));
+
+  if (authoredLinks.length) {
+    renderPosts(container, authoredLinks);
+  }
 
   block.append(container);
 }
