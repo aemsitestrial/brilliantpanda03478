@@ -1,16 +1,33 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+const CARD_THEMES = new Set(['default', 'dark', 'highlight']);
+
 function applyTheme(li) {
   const themeField = li.querySelector('[data-theme]');
-  if (!themeField) return;
+  const body = li.querySelector('.cards-card-body');
 
-  const theme = themeField.dataset.theme?.trim();
-  if (theme === 'dark' || theme === 'highlight') {
-    li.classList.add(`theme-${theme}`);
+  if (themeField) {
+    const theme = themeField.dataset.theme?.trim();
+    if (theme === 'dark' || theme === 'highlight') {
+      li.classList.add(`theme-${theme}`);
+    }
+
+    themeField.remove();
+    return;
   }
 
-  themeField.remove();
+  const firstBlock = body?.firstElementChild;
+  const fallbackTheme = firstBlock?.textContent?.trim()?.toLowerCase();
+  if (!CARD_THEMES.has(fallbackTheme)) return;
+
+  if (fallbackTheme === 'dark' || fallbackTheme === 'highlight') {
+    li.classList.add(`theme-${fallbackTheme}`);
+  }
+
+  if (firstBlock.childElementCount === 0) {
+    firstBlock.remove();
+  }
 }
 
 export default function decorate(block) {
