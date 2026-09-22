@@ -36,6 +36,20 @@
     position: relative;
 }
 
+.cards ul li.theme-dark {
+    background-color: #1f2937;
+    color: #fff;
+}
+
+.cards ul li.theme-dark :is(h1, h2, h3, h4, h5, h6, p, a, li) {
+    color: inherit;
+}
+
+.cards ul li.theme-highlight {
+    border-top: 4px solid currentcolor;
+    box-shadow: 0 10px 24px rgb(0 0 0 / 18%);
+}
+
 /* New Category Badge / Eyebrow Field Style */
 .cards .cards-card-badge {
     display: inline-block;

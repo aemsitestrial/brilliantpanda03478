@@ -29,6 +29,7 @@
           "fields": [
             { "name": "image", "selector": "div:nth-child(1)>picture>img[src]" },
             { "name": "imageAlt", "selector": "div:nth-child(1)>picture>img[alt]" },
+            { "name": "theme", "selector": "div:nth-child(2) [data-theme]" },
             { "name": "badge", "selector": "div:nth-child(2)>p:first-child" },
             { "name": "text", "selector": "div:nth-child(2)" }
           ]
@@ -61,6 +62,27 @@
           "valueType": "string",
           "name": "imageAlt",
           "label": "Alt"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "theme",
+          "value": "default",
+          "label": "Card Theme",
+          "options": [
+            {
+              "name": "Default Light",
+              "value": "default"
+            },
+            {
+              "name": "Dark Charcoal",
+              "value": "dark"
+            },
+            {
+              "name": "Brand Accent Border",
+              "value": "highlight"
+            }
+          ]
         },
         {
           "component": "text",
