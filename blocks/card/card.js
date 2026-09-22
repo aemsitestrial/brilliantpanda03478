@@ -1,18 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-const LAYOUT_VARIANTS = new Set([
-  'vertical',
-  'horizontal-left',
-  'horizontal-right',
-  'overlay',
-  'text-only',
-]);
-
-function normalizeLayoutVariant(value) {
-  const normalizedValue = value?.trim()?.toLowerCase();
-  return LAYOUT_VARIANTS.has(normalizedValue) ? normalizedValue : 'vertical';
-}
+const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea';
 
 function moveChildren(source, destination) {
   moveInstrumentation(source, destination);
@@ -42,49 +31,117 @@ function optimizeMedia(slot) {
   image.closest('picture').replaceWith(optimizedPicture);
 }
 
+function getFieldText(source) {
+  return source?.textContent?.trim() || '';
+}
+
+function getLinkValue(source) {
+  const authoredLink = source?.querySelector('a[href]');
+  if (authoredLink) return authoredLink.getAttribute('href') || '';
+  return getFieldText(source);
+}
+
+function buildHeading(source) {
+  if (!source) return null;
+
+  const existingHeading = source.querySelector('h1, h2, h3, h4, h5, h6');
+  if (existingHeading) {
+    existingHeading.classList.add('card-title');
+    moveInstrumentation(source, existingHeading);
+    return existingHeading;
+  }
+
+  const heading = document.createElement('h3');
+  heading.className = 'card-title';
+  moveChildren(source, heading);
+  return heading;
+}
+
+function buildCta(labelCell, linkCell) {
+  const href = getLinkValue(linkCell);
+  const label = getFieldText(labelCell);
+  if (!href || !label) return null;
+
+  const anchor = document.createElement('a');
+  anchor.className = 'card-cta-button';
+  anchor.href = href;
+  anchor.textContent = label;
+  if (labelCell) moveInstrumentation(labelCell, anchor);
+  if (linkCell) moveInstrumentation(linkCell, anchor);
+  return anchor;
+}
+
+function makeCardInteractive(item, href) {
+  if (!href) return;
+
+  item.dataset.cardHref = href;
+  item.tabIndex = 0;
+  item.setAttribute('role', 'link');
+  item.addEventListener('click', (event) => {
+    if (event.target.closest(INTERACTIVE_SELECTOR)) return;
+    window.location.assign(href);
+  });
+  item.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    if (event.target.closest(INTERACTIVE_SELECTOR)) return;
+    event.preventDefault();
+    window.location.assign(href);
+  });
+}
+
 function buildCardItem(row) {
   const cells = [...row.children];
   if (!cells.length) return null;
 
-  const [mediaCell, tagCell, titleCell, bodyCell, ctaCell, variantCell] = cells;
-  const layoutVariant = normalizeLayoutVariant(
-    variantCell?.textContent || row.dataset.layoutVariant,
-  );
+  const [
+    bgImageCell,
+    badgeCell,
+    publishDateCell,
+    titleCell,
+    descriptionCell,
+    ctaLabelCell,
+    ctaLinkCell,
+  ] = cells;
+  const href = getLinkValue(ctaLinkCell);
 
   const item = document.createElement('li');
-  item.className = `card-item layout-${layoutVariant}`;
-  item.dataset.layoutVariant = layoutVariant;
+  item.className = 'card-item';
   moveInstrumentation(row, item);
+  makeCardInteractive(item, href);
 
-  if (mediaCell && layoutVariant !== 'text-only') {
-    const mediaSlot = createFieldElement(mediaCell, 'card-media-slot');
+  if (bgImageCell) {
+    const mediaSlot = createFieldElement(bgImageCell, 'card-bg-media');
     optimizeMedia(mediaSlot);
     item.append(mediaSlot);
   }
 
+  const contentLayer = document.createElement('div');
+  contentLayer.className = 'card-content-layer';
+
+  const headerSlot = document.createElement('div');
+  headerSlot.className = 'card-header-slot';
+  [
+    createFieldElement(badgeCell, 'card-badge'),
+    createFieldElement(publishDateCell, 'card-pub-date'),
+  ].filter(Boolean).forEach((element) => headerSlot.append(element));
+
   const bodySlot = document.createElement('div');
   bodySlot.className = 'card-body-slot';
+  [buildHeading(titleCell), createFieldElement(descriptionCell, 'card-description')]
+    .filter(Boolean)
+    .forEach((element) => bodySlot.append(element));
 
-  const contentSlot = document.createElement('div');
-  contentSlot.className = 'card-content-slot';
+  const divider = document.createElement('div');
+  divider.className = 'card-divider';
+  divider.setAttribute('aria-hidden', 'true');
 
-  [
-    createFieldElement(tagCell, 'card-tag'),
-    createFieldElement(titleCell, 'card-title'),
-    createFieldElement(bodyCell, 'card-copy'),
-  ].filter(Boolean).forEach((element) => contentSlot.append(element));
+  const footerSlot = document.createElement('div');
+  footerSlot.className = 'card-footer-slot';
+  const cta = buildCta(ctaLabelCell, ctaLinkCell);
+  if (cta) footerSlot.append(cta);
 
-  bodySlot.append(contentSlot);
-
-  const actionsSlot = createFieldElement(ctaCell, 'card-actions');
-  if (actionsSlot) bodySlot.append(actionsSlot);
-
-  item.append(bodySlot);
-
-  if (variantCell) {
-    const metadataSlot = createFieldElement(variantCell, 'card-layout-metadata');
-    item.append(metadataSlot);
-  }
+  contentLayer.append(headerSlot, bodySlot, divider, footerSlot);
+  item.append(contentLayer);
 
   return item;
 }

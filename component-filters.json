@@ -39,6 +39,12 @@
     ]
   },
   {
+    "id": "card",
+    "components": [
+      "card"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
