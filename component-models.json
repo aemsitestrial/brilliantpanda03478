@@ -208,67 +208,6 @@
       {
         "component": "reference",
         "valueType": "string",
-        "name": "bgImage",
-        "label": "Background Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "bgImageAlt",
-        "value": "",
-        "label": "Background Image Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "categoryBadge",
-        "value": "",
-        "label": "Category Badge"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "publishDate",
-        "value": "",
-        "label": "Publish Date"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "title",
-        "value": "",
-        "label": "Title"
-      },
-      {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "description",
-        "value": "",
-        "label": "Description"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "ctaLabel",
-        "value": "",
-        "label": "CTA Label"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "ctaLink",
-        "value": "",
-        "label": "CTA Link"
-      }
-    ]
-  },
-  {
-    "id": "card",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
         "name": "image",
         "label": "Image",
         "multi": false

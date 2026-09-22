@@ -6,7 +6,6 @@
       "plugins": {
         "da": {
           "rows": 1,
-          
           "columns": 2
         },
         "xwalk": {
@@ -24,12 +23,13 @@
       "title": "Card",
       "id": "card",
       "plugins": {
-         "da": {
+        "da": {
           "rows": 1,
           "columns": 2,
           "fields": [
-            { "name": "image", "selector": "div:nth-child(1)>picture>img[src]"},
-            { "name": "imageAlt", "selector": "div:nth-child(1)>picture>img[alt]"},
+            { "name": "image", "selector": "div:nth-child(1)>picture>img[src]" },
+            { "name": "imageAlt", "selector": "div:nth-child(1)>picture>img[alt]" },
+            { "name": "badge", "selector": "div:nth-child(2)>p:first-child" },
             { "name": "text", "selector": "div:nth-child(2)" }
           ]
         },
@@ -61,7 +61,13 @@
           "valueType": "string",
           "name": "imageAlt",
           "label": "Alt"
-        },        
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "badge",
+          "label": "Badge / Tag (e.g., FEATURED)"
+        },
         {
           "component": "richtext",
           "name": "text",

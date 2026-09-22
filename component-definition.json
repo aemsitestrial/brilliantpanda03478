@@ -159,65 +159,6 @@
           }
         },
         {
-          "title": "Card",
-          "id": "card",
-          "plugins": {
-            "da": {
-              "rows": 1,
-              "columns": 7,
-              "fields": [
-                {
-                  "name": "bgImage",
-                  "selector": "div:nth-child(1)>picture>img[src]"
-                },
-                {
-                  "name": "bgImageAlt",
-                  "selector": "div:nth-child(1)>picture>img[alt]"
-                },
-                {
-                  "name": "categoryBadge",
-                  "selector": "div:nth-child(2)"
-                },
-                {
-                  "name": "publishDate",
-                  "selector": "div:nth-child(3)"
-                },
-                {
-                  "name": "title",
-                  "selector": "div:nth-child(4)"
-                },
-                {
-                  "name": "description",
-                  "selector": "div:nth-child(5)"
-                },
-                {
-                  "name": "ctaLabel",
-                  "selector": "div:nth-child(6)"
-                },
-                {
-                  "name": "ctaLink",
-                  "selector": "div:nth-child(7)"
-                }
-              ]
-            },
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Card",
-                  "model": "card",
-                  "categoryBadge": "FEATURED ARTICLE",
-                  "publishDate": "Published Dec 2025",
-                  "title": "Digital Twins: State of Enterprise Simulation",
-                  "description": "<p>Add a supporting summary for the featured card.</p>",
-                  "ctaLabel": "Deep Dive Study",
-                  "ctaLink": "/"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Cards",
           "id": "cards",
           "plugins": {

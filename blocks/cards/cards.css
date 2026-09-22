@@ -36,6 +36,21 @@
     position: relative;
 }
 
+/* New Category Badge / Eyebrow Field Style */
+.cards .cards-card-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: #f3f4f6;
+    color: #1f2937;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
 .numbered > .cards-wrapper {
     padding: 40px;
     box-sizing: border-box;
@@ -85,9 +100,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font:
-        normal normal normal 300px/300px Baskerville,
-        serif;
+    font: normal normal normal 300px/300px Baskerville, serif;
     color: rgb(0 0 0 / 10%);
 }
 
@@ -115,9 +128,7 @@
     }
 
     .numbered .cards-card-body::before {
-        font:
-            normal normal normal 400px/400px Baskerville,
-            serif;
+        font: normal normal normal 400px/400px Baskerville, serif;
     }
 }
 
@@ -189,7 +200,6 @@
     }
 
     .home .cards-card-image img {
-        /* min-width: 660px; */
         max-height: 360px;
     }
 }
