@@ -219,6 +219,27 @@
         "label": "Alt"
       },
       {
+        "component": "select",
+        "valueType": "string",
+        "name": "theme",
+        "value": "default",
+        "label": "Card Theme",
+        "options": [
+          {
+            "name": "Default Light",
+            "value": "default"
+          },
+          {
+            "name": "Dark Charcoal",
+            "value": "dark"
+          },
+          {
+            "name": "Brand Accent Border",
+            "value": "highlight"
+          }
+        ]
+      },
+      {
         "component": "richtext",
         "name": "text",
         "value": "",

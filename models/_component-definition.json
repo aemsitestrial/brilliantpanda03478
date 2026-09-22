@@ -194,6 +194,10 @@
                   "selector": "div:nth-child(1)>picture>img[alt]"
                 },
                 {
+                  "name": "theme",
+                  "selector": "div:nth-child(2) [data-theme]"
+                },
+                {
                   "name": "text",
                   "selector": "div:nth-child(2)"
                 }
