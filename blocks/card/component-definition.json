@@ -1,0 +1,156 @@
+{
+  "definitions": [
+    {
+      "title": "Card",
+      "id": "card",
+      "plugins": {
+        "da": {
+          "rows": 1,
+          "columns": 6,
+          "fields": [
+            {
+              "name": "mediaReference",
+              "selector": "div:nth-child(1)>picture>img[src]"
+            },
+            {
+              "name": "mediaAlt",
+              "selector": "div:nth-child(1)>picture>img[alt]"
+            },
+            {
+              "name": "tag",
+              "selector": "div:nth-child(2)"
+            },
+            {
+              "name": "title",
+              "selector": "div:nth-child(3)"
+            },
+            {
+              "name": "body",
+              "selector": "div:nth-child(4)"
+            },
+            {
+              "name": "ctaText",
+              "selector": "div:nth-child(5)>p>a"
+            },
+            {
+              "name": "ctaHref",
+              "selector": "div:nth-child(5)>p>a[href]"
+            },
+            {
+              "name": "layoutVariant",
+              "selector": "div:nth-child(6)"
+            }
+          ]
+        },
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Card",
+              "model": "card",
+              "layoutVariant": "vertical",
+              "tag": "Tag",
+              "title": "Card title",
+              "body": "<p>Add supporting copy for this card.</p>",
+              "ctaText": "Learn more",
+              "ctaHref": "/"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "card",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "layoutVariant",
+          "value": "vertical",
+          "label": "Layout Variant",
+          "options": [
+            {
+              "name": "Vertical Stacked",
+              "value": "vertical"
+            },
+            {
+              "name": "Horizontal Split Left",
+              "value": "horizontal-left"
+            },
+            {
+              "name": "Horizontal Split Right",
+              "value": "horizontal-right"
+            },
+            {
+              "name": "Overlay / Hero",
+              "value": "overlay"
+            },
+            {
+              "name": "Text-Only / Minimalist",
+              "value": "text-only"
+            }
+          ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "mediaReference",
+          "label": "Media",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "mediaAlt",
+          "value": "",
+          "label": "Media Alt Text"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tag",
+          "value": "",
+          "label": "Tag"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "value": "",
+          "label": "Title"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "body",
+          "value": "",
+          "label": "Body"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "ctaText",
+          "value": "",
+          "label": "CTA Text"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "ctaHref",
+          "value": "",
+          "label": "CTA Link"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "card",
+      "components": [
+        "card"
+      ]
+    }
+  ]
+}

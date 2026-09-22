@@ -6,6 +6,7 @@
       "plugins": {
         "da": {
           "rows": 1,
+          
           "columns": 2
         },
         "xwalk": {
