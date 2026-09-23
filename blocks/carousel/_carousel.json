@@ -55,6 +55,26 @@
           "value": "",
           "label": "Text",
           "valueType": "string"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "content_align",
+          "label": "Text Alignment",
+          "options": [
+            {
+              "name": "Left",
+              "value": "left"
+            },
+            {
+              "name": "Center",
+              "value": "center"
+            },
+            {
+              "name": "Right",
+              "value": "right"
+            }
+          ]
         }
       ]
     }

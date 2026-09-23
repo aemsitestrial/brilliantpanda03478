@@ -73,6 +73,21 @@ function createSlide(row, slideIndex, carouselId) {
     column.classList.add(
       `carousel-slide-${colIdx === 0 ? 'image' : 'content'}`,
     );
+
+    if (colIdx !== 0) {
+      const alignField = column.querySelector(
+        '[data-aue-prop="content_align"], [data-content-align], [data-content_align]',
+      );
+      const alignValue = alignField?.dataset.contentAlign
+        || alignField?.dataset.content_align
+        || alignField?.textContent?.trim()?.toLowerCase();
+
+      if (alignValue) {
+        column.setAttribute('data-align', alignValue);
+        alignField?.remove();
+      }
+    }
+
     slide.append(column);
   });
 
