@@ -43,7 +43,7 @@ export default function decorate(block) {
       } else {
         div.className = 'cards-card-body';
 
-        // Check if a top tag/badge paragraph exists and has content
+        // Automatically tags the first paragraph as a category badge if it is not a link
         const firstPara = div.querySelector('p:first-child');
         if (firstPara && !firstPara.querySelector('a') && div.children.length > 1) {
           firstPara.classList.add('cards-card-badge');
