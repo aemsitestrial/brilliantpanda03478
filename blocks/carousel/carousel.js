@@ -70,22 +70,18 @@ function createSlide(row, slideIndex, carouselId) {
   slide.classList.add('carousel-slide');
 
   row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
-    column.classList.add(
-      `carousel-slide-${colIdx === 0 ? 'image' : 'content'}`,
-    );
+    const isImage = colIdx === 0;
+    column.classList.add(`carousel-slide-${isImage ? 'image' : 'content'}`);
 
-    if (colIdx !== 0) {
-      const alignField = column.querySelector(
-        '[data-aue-prop="content_align"], [data-content-align], [data-content_align]',
-      );
-      const alignValue = alignField?.dataset.contentAlign
-        || alignField?.dataset.content_align
-        || alignField?.textContent?.trim()?.toLowerCase();
-
-      if (alignValue) {
-        column.setAttribute('data-align', alignValue);
-        alignField?.remove();
-      }
+    if (!isImage) {
+      const allElements = column.querySelectorAll('*');
+      allElements.forEach((el) => {
+        const text = el.textContent.trim().toLowerCase();
+        if (text === 'left' || text === 'center' || text === 'right') {
+          column.setAttribute('data-align', text);
+          el.remove();
+        }
+      });
     }
 
     slide.append(column);
@@ -136,7 +132,7 @@ export default async function decorate(block) {
     const slideNavButtons = document.createElement('div');
     slideNavButtons.classList.add('carousel-navigation-buttons');
     slideNavButtons.innerHTML = `
-      <button type="button" class= "slide-prev" aria-label="${placeholders.previousSlide || 'Previous Slide'}"></button>
+      <button type="button" class="slide-prev" aria-label="${placeholders.previousSlide || 'Previous Slide'}"></button>
       <button type="button" class="slide-next" aria-label="${placeholders.nextSlide || 'Next Slide'}"></button>
     `;
 
