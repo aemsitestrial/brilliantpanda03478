@@ -276,7 +276,7 @@
         "component": "select",
         "valueType": "string",
         "name": "content_align",
-        "label": "Text Alignment",
+        "label": "Horizontal Alignment",
         "options": [
           {
             "name": "Left",
@@ -289,6 +289,26 @@
           {
             "name": "Right",
             "value": "right"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "content_valign",
+        "label": "Vertical Alignment",
+        "options": [
+          {
+            "name": "Top",
+            "value": "top"
+          },
+          {
+            "name": "Middle",
+            "value": "middle"
+          },
+          {
+            "name": "Bottom",
+            "value": "bottom"
           }
         ]
       }
