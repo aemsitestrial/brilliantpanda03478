@@ -32,12 +32,28 @@
   min-height: min(50vw, calc(100dvh - var(--header-height)));
 }
 
+.carousel .carousel-slide:has(.carousel-slide-content[data-align='left']) {
+  align-items: flex-start;
+}
+
 .carousel .carousel-slide:has(.carousel-slide-content[data-align='center']) {
   align-items: center;
 }
 
 .carousel .carousel-slide:has(.carousel-slide-content[data-align='right']) {
   align-items: flex-end;
+}
+
+.carousel .carousel-slide:has(.carousel-slide-content[data-valign='top']) {
+  justify-content: flex-start;
+}
+
+.carousel .carousel-slide:has(.carousel-slide-content[data-valign='middle']) {
+  justify-content: center;
+}
+
+.carousel .carousel-slide:has(.carousel-slide-content[data-valign='bottom']) {
+  justify-content: flex-end;
 }
 
 .carousel .carousel-slide .carousel-slide-image picture {

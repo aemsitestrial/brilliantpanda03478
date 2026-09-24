@@ -77,8 +77,16 @@ function createSlide(row, slideIndex, carouselId) {
       const allElements = column.querySelectorAll('*');
       allElements.forEach((el) => {
         const text = el.textContent.trim().toLowerCase();
+
+        // Horizontal Alignment
         if (text === 'left' || text === 'center' || text === 'right') {
           column.setAttribute('data-align', text);
+          el.remove();
+        }
+
+        // Vertical Alignment
+        if (text === 'top' || text === 'middle' || text === 'bottom') {
+          column.setAttribute('data-valign', text);
           el.remove();
         }
       });
