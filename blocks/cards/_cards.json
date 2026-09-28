@@ -95,7 +95,16 @@
           "name": "text",
           "value": "",
           "label": "Text",
-          "valueType": "string"
+          "valueType": "string",
+          "plugins": {
+            "rte": {
+              "format": ["h1", "h2", "h3", "h4", "h5", "h6", "p"],
+              "style": ["bold", "italic", "underline", "strikethrough", "subscript", "superscript"],
+              "list": ["unordered", "ordered"],
+              "link": ["autolink", "link"],
+              "clear": ["clear"]
+            }
+          }
         }
       ]
     }
