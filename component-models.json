@@ -249,6 +249,35 @@
     ]
   },
   {
+    "id": "card-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title & Category",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "stats",
+        "label": "Stats List",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "buttonLink",
+        "label": "Button Link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "carousel-item",
     "fields": [
       {
