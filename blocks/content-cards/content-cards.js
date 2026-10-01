@@ -42,13 +42,20 @@ export default function decorate(block) {
     const cells = [...row.children];
     if (cells.length > 0) {
       const imageCell = cells[0] || null;
-      const categoryCell = cells[1] || null;
-      const topicCell = cells[2] || null;
-      const publishedDateCell = cells[3] || null;
-      const titleCell = cells[4] || null;
-      const descriptionCell = cells[5] || null;
-      const statsCell = cells[6] || null;
-      const buttonLinkCell = cells[7] || null;
+      const themeCell = cells[1] || null;
+      const categoryCell = cells[2] || null;
+      const topicCell = cells[3] || null;
+      const publishedDateCell = cells[4] || null;
+      const titleCell = cells[5] || null;
+      const descriptionCell = cells[6] || null;
+      const statsCell = cells[7] || null;
+      const buttonLinkCell = cells[8] || null;
+
+      // Apply theme class if present
+      const theme = getCellText(themeCell);
+      if (theme) {
+        li.classList.add(theme);
+      }
 
       if (isArticleVariant) {
         if (imageCell && imageCell.querySelector('picture')) {
