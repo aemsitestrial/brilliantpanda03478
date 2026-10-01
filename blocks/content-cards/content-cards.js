@@ -29,6 +29,7 @@ function getLinkCell(buttonLinkCell) {
 }
 
 export default function decorate(block) {
+  const isArticleVariant = block.classList.contains('article-cards');
   const ul = document.createElement('ul');
   ul.className = 'content-cards-grid';
 
@@ -40,114 +41,149 @@ export default function decorate(block) {
 
     const cells = [...row.children];
     if (cells.length > 0) {
-      // Cell mappings based on content-card-item model fields order
       const imageCell = cells[0] || null;
-      const themeCell = cells[1] || null;
-      const categoryCell = cells[2] || null;
-      const topicCell = cells[3] || null;
-      const publishedDateCell = cells[4] || null;
-      const titleCell = cells[5] || null;
-      const descriptionCell = cells[6] || null;
-      const statsCell = cells[7] || null;
-      const buttonLinkCell = cells[8] || null;
+      const categoryCell = cells[1] || null;
+      const topicCell = cells[2] || null;
+      const publishedDateCell = cells[3] || null;
+      const titleCell = cells[4] || null;
+      const descriptionCell = cells[5] || null;
+      const statsCell = cells[6] || null;
+      const buttonLinkCell = cells[7] || null;
 
-      // Extract child theme choice
-      const themeValue = getCellText(themeCell)?.toLowerCase() || 'default-light';
-      li.classList.add(`theme-${themeValue}`);
-
-      // 1. Image Banner
-      if (imageCell && imageCell.querySelector('picture') && themeValue !== 'blue-solid') {
-        const imageWrapper = renderImageCell(imageCell, 'card-image-banner');
-        if (imageWrapper) li.append(imageWrapper);
-      }
-
-      // 2. Card Body Wrapper
-      const cardBody = document.createElement('div');
-      cardBody.className = 'card-body';
-
-      // 3. Metadata Header Bar
-      const category = getCellText(categoryCell);
-      const topic = getCellText(topicCell);
-      const pubDate = getCellText(publishedDateCell);
-
-      if (category || topic || pubDate) {
-        const metaContainer = document.createElement('div');
-        metaContainer.className = 'card-meta-bar';
-
-        const tagsWrapper = document.createElement('div');
-        tagsWrapper.className = 'meta-tags-wrapper';
-
-        if (category) {
-          const catSpan = document.createElement('span');
-          catSpan.className = 'meta-category-badge';
-          catSpan.textContent = category;
-          moveInstrumentation(categoryCell, catSpan);
-          tagsWrapper.append(catSpan);
+      if (isArticleVariant) {
+        if (imageCell && imageCell.querySelector('picture')) {
+          const imageWrapper = renderImageCell(imageCell, 'card-image-banner');
+          if (imageWrapper) li.append(imageWrapper);
+        } else {
+          li.classList.add('is-featured-report');
         }
 
-        const tagSpan = document.createElement('span');
-        tagSpan.className = 'meta-tag-label';
-        tagSpan.textContent = 'TAG';
-        tagsWrapper.append(tagSpan);
+        const category = getCellText(categoryCell);
+        const topic = getCellText(topicCell);
+        const pubDate = getCellText(publishedDateCell);
 
-        if (topic) {
-          const topicSpan = document.createElement('span');
-          topicSpan.className = 'meta-topic-text';
-          topicSpan.textContent = topic;
-          moveInstrumentation(topicCell, topicSpan);
-          tagsWrapper.append(topicSpan);
+        if (category || topic || pubDate) {
+          const metaContainer = document.createElement('div');
+          metaContainer.className = 'card-meta-bar';
+
+          const tagsWrapper = document.createElement('div');
+          tagsWrapper.className = 'meta-tags-wrapper';
+
+          if (category) {
+            const catSpan = document.createElement('span');
+            catSpan.className = 'meta-category-badge';
+            catSpan.textContent = category;
+            moveInstrumentation(categoryCell, catSpan);
+            tagsWrapper.append(catSpan);
+          }
+
+          if (topic) {
+            const topicSpan = document.createElement('span');
+            topicSpan.className = 'meta-topic-text';
+            topicSpan.textContent = topic;
+            moveInstrumentation(topicCell, topicSpan);
+            tagsWrapper.append(topicSpan);
+          }
+
+          metaContainer.append(tagsWrapper);
+
+          if (pubDate) {
+            const pubDateDiv = document.createElement('div');
+            pubDateDiv.className = 'meta-pubdate-text';
+            pubDateDiv.textContent = pubDate;
+            moveInstrumentation(publishedDateCell, pubDateDiv);
+            metaContainer.append(pubDateDiv);
+          }
+
+          li.append(metaContainer);
         }
 
-        metaContainer.append(tagsWrapper);
-
-        if (pubDate) {
-          const pubDateDiv = document.createElement('div');
-          pubDateDiv.className = 'meta-pubdate-text';
-          pubDateDiv.textContent = pubDate;
-          moveInstrumentation(publishedDateCell, pubDateDiv);
-          metaContainer.append(pubDateDiv);
+        const titleText = getCellText(titleCell);
+        if (titleText) {
+          const h3 = document.createElement('h3');
+          h3.className = 'card-headline';
+          h3.textContent = titleText;
+          moveInstrumentation(titleCell, h3);
+          li.append(h3);
         }
 
-        cardBody.append(metaContainer);
-      }
+        if (descriptionCell && descriptionCell.childNodes.length > 0) {
+          const descDiv = document.createElement('div');
+          descDiv.className = 'card-description-body';
+          moveInstrumentation(descriptionCell, descDiv);
+          descDiv.append(...descriptionCell.childNodes);
+          li.append(descDiv);
+        }
 
-      // 4. Headline Title
-      const titleText = getCellText(titleCell);
-      if (titleText) {
-        const h3 = document.createElement('h3');
-        h3.className = 'card-headline';
-        h3.textContent = titleText;
-        moveInstrumentation(titleCell, h3);
-        cardBody.append(h3);
-      }
+        const link = getLinkCell(buttonLinkCell);
+        if (link) {
+          link.className = li.classList.contains('is-featured-report') ? 'card-button-dark' : 'card-link-arrow';
+          moveInstrumentation(buttonLinkCell, link);
+          li.append(link);
+        }
 
-      // 5. Description Body
-      if (descriptionCell && descriptionCell.childNodes.length > 0) {
-        const descDiv = document.createElement('div');
-        descDiv.className = 'card-description-body';
-        moveInstrumentation(descriptionCell, descDiv);
-        descDiv.append(...descriptionCell.childNodes);
-        cardBody.append(descDiv);
-      }
+        if (statsCell && statsCell.childNodes.length > 0) {
+          const authorDiv = document.createElement('div');
+          authorDiv.className = 'card-author-footer';
+          moveInstrumentation(statsCell, authorDiv);
+          authorDiv.append(...statsCell.childNodes);
+          li.append(authorDiv);
+        }
+      } else {
+        const topContent = document.createElement('div');
+        topContent.className = 'card-content-top';
 
-      // 6. Action Button / Link
-      const link = getLinkCell(buttonLinkCell);
-      if (link) {
-        link.className = 'card-button-action';
-        moveInstrumentation(buttonLinkCell, link);
-        cardBody.append(link);
-      }
+        if (imageCell && imageCell.querySelector('picture')) {
+          const imageWrapper = renderImageCell(imageCell, 'card-image-banner');
+          if (imageWrapper) topContent.append(imageWrapper);
+        }
 
-      // 7. Stats / Author Info
-      if (statsCell && statsCell.childNodes.length > 0) {
-        const authorDiv = document.createElement('div');
-        authorDiv.className = 'card-author-footer';
-        moveInstrumentation(statsCell, authorDiv);
-        authorDiv.append(...statsCell.childNodes);
-        cardBody.append(authorDiv);
-      }
+        const categoryText = getCellText(categoryCell);
+        if (categoryText) {
+          const categoryDiv = document.createElement('div');
+          categoryDiv.className = 'card-category-tag';
+          categoryDiv.textContent = categoryText;
+          moveInstrumentation(categoryCell, categoryDiv);
+          topContent.append(categoryDiv);
+        }
 
-      li.append(cardBody);
+        const titleText = getCellText(titleCell) || categoryText;
+        if (titleText) {
+          const h3 = document.createElement('h3');
+          h3.className = 'card-headline';
+          h3.textContent = titleText;
+          moveInstrumentation(titleCell || categoryCell, h3);
+          topContent.append(h3);
+        }
+
+        if (descriptionCell && descriptionCell.childNodes.length > 0) {
+          const descDiv = document.createElement('div');
+          descDiv.className = 'card-description-body';
+          moveInstrumentation(descriptionCell, descDiv);
+          descDiv.append(...descriptionCell.childNodes);
+          topContent.append(descDiv);
+        }
+
+        const bottomContent = document.createElement('div');
+        bottomContent.className = 'card-content-bottom';
+
+        if (statsCell && statsCell.childNodes.length > 0) {
+          const statsDiv = document.createElement('div');
+          statsDiv.className = 'card-stats-list';
+          moveInstrumentation(statsCell, statsDiv);
+          statsDiv.append(...statsCell.childNodes);
+          bottomContent.append(statsDiv);
+        }
+
+        const link = getLinkCell(buttonLinkCell);
+        if (link) {
+          link.className = 'card-button-outline';
+          moveInstrumentation(buttonLinkCell, link);
+          bottomContent.append(link);
+        }
+
+        li.append(topContent, bottomContent);
+      }
     }
 
     ul.append(li);

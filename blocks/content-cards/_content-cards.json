@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Content Cards Container",
+      "title": "Content Cards",
       "id": "content-cards",
       "plugins": {
         "xwalk": {
@@ -35,7 +35,24 @@
   "models": [
     {
       "id": "content-cards",
-      "fields": []
+      "fields": [
+        {
+          "component": "select",
+          "name": "classes",
+          "label": "Card Style Variant",
+          "value": "",
+          "options": [
+            {
+              "name": "Solid Blue Topic Cards",
+              "value": ""
+            },
+            {
+              "name": "Article & Report Cards",
+              "value": "article-cards"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "content-card-item",
@@ -46,19 +63,6 @@
           "name": "image",
           "label": "Image",
           "multi": false
-        },
-        {
-          "component": "select",
-          "valueType": "string",
-          "name": "theme",
-          "value": "default-light",
-          "label": "Card Theme (Child Color / Style)",
-          "options": [
-            { "name": "Default Light", "value": "default-light" },
-            { "name": "Blue Solid (No Image)", "value": "blue-solid" },
-            { "name": "Dark Charcoal", "value": "dark-charcoal" },
-            { "name": "Brand Accent Border", "value": "brand-accent-border" }
-          ]
         },
         {
           "component": "text",
