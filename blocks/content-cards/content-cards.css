@@ -243,6 +243,96 @@
   }
 }
  
+/* Theme Variations */
+.content-cards:not(.article-cards) .content-card-item.default-light {
+  background: #fff;
+  color: #1a1a1a;
+  border: 1px solid #e0e0e0;
+}
+
+.content-cards:not(.article-cards) .content-card-item.default-light .card-category-tag {
+  color: #4d80ff;
+  opacity: 1;
+}
+
+.content-cards:not(.article-cards) .content-card-item.default-light .card-headline {
+  color: #111;
+}
+
+.content-cards:not(.article-cards) .content-card-item.default-light .card-description-body {
+  color: #333;
+}
+
+.content-cards:not(.article-cards) .content-card-item.default-light .card-button-outline {
+  border: 1px solid #4d80ff;
+  color: #4d80ff;
+}
+
+.content-cards:not(.article-cards) .content-card-item.default-light .card-button-outline:hover {
+  background-color: #f0f4ff;
+}
+
+.content-cards:not(.article-cards) .content-card-item.blue-solid {
+  background: #4d80ff;
+  color: #fff;
+}
+
+.content-cards:not(.article-cards) .content-card-item.blue-solid .card-image-banner {
+  display: none;
+}
+
+.content-cards:not(.article-cards) .content-card-item.dark-charcoal {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.content-cards:not(.article-cards) .content-card-item.dark-charcoal .card-category-tag {
+  color: #b0b0b0;
+  opacity: 1;
+}
+
+.content-cards:not(.article-cards) .content-card-item.dark-charcoal .card-button-outline {
+  border: 1px solid rgb(255 255 255 / 60%);
+}
+
+.content-cards:not(.article-cards) .content-card-item.dark-charcoal .card-button-outline:hover {
+  background-color: rgb(255 255 255 / 10%);
+}
+
+.content-cards:not(.article-cards) .content-card-item.brand-accent-border {
+  background: #fff;
+  color: #1a1a1a;
+  border: 3px solid #4d80ff;
+}
+
+.content-cards:not(.article-cards) .content-card-item.brand-accent-border .card-category-tag {
+  color: #4d80ff;
+  opacity: 1;
+}
+
+.content-cards:not(.article-cards) .content-card-item.brand-accent-border .card-headline {
+  color: #111;
+}
+
+.content-cards:not(.article-cards) .content-card-item.brand-accent-border .card-description-body {
+  color: #333;
+}
+
+.content-cards:not(.article-cards) .content-card-item.brand-accent-border .card-button-outline {
+  border: 1px solid #4d80ff;
+  color: #4d80ff;
+}
+
+.content-cards:not(.article-cards) .content-card-item.brand-accent-border .card-button-outline:hover {
+  background-color: #f0f4ff;
+}
+
+@media (width <= 1024px) {
+  .content-cards.block > ul.content-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (width <= 640px) {
   .content-cards.block > ul.content-cards-grid {
     grid-template-columns: 1fr;
