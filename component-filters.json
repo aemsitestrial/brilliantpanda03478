@@ -16,6 +16,7 @@
       "cards",
       "carousel",
       "columns",
+      "content-cards",
       "dm-video",
       "dm-scene7-template",
       "embed",
@@ -49,6 +50,12 @@
     "id": "card-component",
     "components": [
       "card-item"
+    ]
+  },
+  {
+    "id": "content-cards",
+    "components": [
+      "content-card-item"
     ]
   },
   {
