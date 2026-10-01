@@ -82,22 +82,19 @@
   color: #666;
 }
 
-/* Content Area Typography */
-.content-cards .card-main-content h3,
-.content-cards .card-main-content h2,
-.content-cards .card-main-content h4 {
+.content-cards .card-headline {
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.35;
   margin: 8px 0 12px;
-  color: inherit;
 }
 
-.content-cards .card-main-content p {
+.content-cards .card-description-body {
   font-size: 14px;
   line-height: 1.45;
-  color: inherit;
-  margin-bottom: 16px;
+  color: #555;
+  margin-bottom: 20px;
+  flex-grow: 1;
 }
 
 .content-cards .card-button-action {
@@ -148,7 +145,7 @@
   color: rgb(255 255 255 / 75%);
 }
 
-.content-cards .content-card-item.theme-blue-solid .card-main-content h3 {
+.content-cards .content-card-item.theme-blue-solid .card-headline {
   color: #fff;
   font-size: 1.4rem;
   margin-top: 12px;
@@ -167,6 +164,7 @@
   color: #fff;
 }
 
+.content-cards .content-card-item.theme-dark-charcoal .card-description-body,
 .content-cards .content-card-item.theme-dark-charcoal .meta-pubdate-text {
   color: #aaa;
 }
