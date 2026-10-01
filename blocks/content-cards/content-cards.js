@@ -151,12 +151,44 @@ export default function decorate(block) {
         }
 
         const categoryText = getCellText(categoryCell);
-        if (categoryText) {
-          const categoryDiv = document.createElement('div');
-          categoryDiv.className = 'card-category-tag';
-          categoryDiv.textContent = categoryText;
-          moveInstrumentation(categoryCell, categoryDiv);
-          topContent.append(categoryDiv);
+        const topicText = getCellText(topicCell);
+        const pubDateText = getCellText(publishedDateCell);
+
+        // Metadata section (category, topic, published date)
+        if (categoryText || topicText || pubDateText) {
+          const metaContainer = document.createElement('div');
+          metaContainer.className = 'card-meta-bar';
+
+          const tagsWrapper = document.createElement('div');
+          tagsWrapper.className = 'meta-tags-wrapper';
+
+          if (categoryText) {
+            const catSpan = document.createElement('span');
+            catSpan.className = 'meta-category-badge';
+            catSpan.textContent = categoryText;
+            moveInstrumentation(categoryCell, catSpan);
+            tagsWrapper.append(catSpan);
+          }
+
+          if (topicText) {
+            const topicSpan = document.createElement('span');
+            topicSpan.className = 'meta-topic-text';
+            topicSpan.textContent = topicText;
+            moveInstrumentation(topicCell, topicSpan);
+            tagsWrapper.append(topicSpan);
+          }
+
+          metaContainer.append(tagsWrapper);
+
+          if (pubDateText) {
+            const pubDateDiv = document.createElement('div');
+            pubDateDiv.className = 'meta-pubdate-text';
+            pubDateDiv.textContent = pubDateText;
+            moveInstrumentation(publishedDateCell, pubDateDiv);
+            metaContainer.append(pubDateDiv);
+          }
+
+          topContent.append(metaContainer);
         }
 
         const titleText = getCellText(titleCell) || categoryText;
