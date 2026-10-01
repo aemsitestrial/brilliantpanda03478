@@ -65,6 +65,31 @@
           "multi": false
         },
         {
+          "component": "select",
+          "valueType": "string",
+          "name": "theme",
+          "value": "default-light",
+          "label": "Card Theme (Child Color / Style)",
+          "options": [
+            {
+              "name": "Default Light",
+              "value": "default-light"
+            },
+            {
+              "name": "Blue Solid (No Image)",
+              "value": "blue-solid"
+            },
+            {
+              "name": "Dark Charcoal",
+              "value": "dark-charcoal"
+            },
+            {
+              "name": "Brand Accent Border",
+              "value": "brand-accent-border"
+            }
+          ]
+        },
+        {
           "component": "text",
           "name": "category",
           "label": "Category",
