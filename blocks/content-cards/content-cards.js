@@ -44,13 +44,14 @@ export default function decorate(block) {
       const imageCell = cells[0] || null;
       const themeCell = cells[1] || null;
       const categoryCell = cells[2] || null;
-      const topicCell = cells[3] || null;
-      const publishedDateCell = cells[4] || null;
-      const titleCell = cells[5] || null;
-      const descriptionCell = cells[6] || null;
-      const statsCell = cells[7] || null;
-      const ctaLabelCell = cells[8] || null;
-      const buttonLinkCell = cells[9] || null;
+      const tagBadgeCell = cells[3] || null;
+      const topicCell = cells[4] || null;
+      const publishedDateCell = cells[5] || null;
+      const titleCell = cells[6] || null;
+      const descriptionCell = cells[7] || null;
+      const statsCell = cells[8] || null;
+      const ctaLabelCell = cells[9] || null;
+      const buttonLinkCell = cells[10] || null;
 
       // Apply theme class if present
       const theme = getCellText(themeCell);
@@ -67,10 +68,11 @@ export default function decorate(block) {
         }
 
         const category = getCellText(categoryCell);
+        const tagBadge = getCellText(tagBadgeCell);
         const topic = getCellText(topicCell);
         const pubDate = getCellText(publishedDateCell);
 
-        if (category || topic || pubDate) {
+        if (category || tagBadge || topic || pubDate) {
           const metaContainer = document.createElement('div');
           metaContainer.className = 'card-meta-bar';
 
@@ -83,6 +85,14 @@ export default function decorate(block) {
             catSpan.textContent = category;
             moveInstrumentation(categoryCell, catSpan);
             tagsWrapper.append(catSpan);
+          }
+
+          if (tagBadge) {
+            const tagSpan = document.createElement('span');
+            tagSpan.className = 'meta-category-badge';
+            tagSpan.textContent = tagBadge;
+            moveInstrumentation(tagBadgeCell, tagSpan);
+            tagsWrapper.append(tagSpan);
           }
 
           if (topic) {
@@ -151,21 +161,25 @@ export default function decorate(block) {
         }
 
         const categoryText = getCellText(categoryCell);
+        const tagBadgeText = getCellText(tagBadgeCell);
         const topicText = getCellText(topicCell);
         const pubDateText = getCellText(publishedDateCell);
 
-        // Metadata section (category, topic, published date)
-        if (categoryText || topicText || pubDateText) {
+        // Metadata section (category, tag badge, topic, published date)
+        if (categoryText || tagBadgeText || topicText || pubDateText) {
           const metaContainer = document.createElement('div');
           metaContainer.className = 'card-meta-bar';
 
-          // Category and Topic on same line
+          // Category, Tag Badge and Topic on same line
           const metaTextDiv = document.createElement('div');
           metaTextDiv.className = 'meta-text-line';
 
           const metaParts = [];
           if (categoryText) {
             metaParts.push(categoryText);
+          }
+          if (tagBadgeText) {
+            metaParts.push(tagBadgeText);
           }
           if (topicText) {
             metaParts.push(topicText);

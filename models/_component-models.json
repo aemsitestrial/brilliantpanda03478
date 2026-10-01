@@ -324,6 +324,12 @@
       },
       {
         "component": "text",
+        "name": "tagBadge",
+        "label": "Tag Badge",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
         "name": "topic",
         "label": "Topic / Read Time",
         "valueType": "string"
