@@ -353,6 +353,12 @@
         "valueType": "string"
       },
       {
+        "component": "text",
+        "name": "ctaLabel",
+        "label": "CTA Label",
+        "valueType": "string"
+      },
+      {
         "component": "aem-content",
         "name": "buttonLink",
         "label": "CTA Link",

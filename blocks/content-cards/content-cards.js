@@ -49,7 +49,8 @@ export default function decorate(block) {
       const titleCell = cells[5] || null;
       const descriptionCell = cells[6] || null;
       const statsCell = cells[7] || null;
-      const buttonLinkCell = cells[8] || null;
+      const ctaLabelCell = cells[8] || null;
+      const buttonLinkCell = cells[9] || null;
 
       // Apply theme class if present
       const theme = getCellText(themeCell);
@@ -125,6 +126,10 @@ export default function decorate(block) {
         const link = getLinkCell(buttonLinkCell);
         if (link) {
           link.className = li.classList.contains('is-featured-report') ? 'card-button-dark' : 'card-link-arrow';
+          const ctaLabel = getCellText(ctaLabelCell);
+          if (ctaLabel) {
+            link.textContent = ctaLabel;
+          }
           moveInstrumentation(buttonLinkCell, link);
           li.append(link);
         }
@@ -185,6 +190,10 @@ export default function decorate(block) {
         const link = getLinkCell(buttonLinkCell);
         if (link) {
           link.className = 'card-button-outline';
+          const ctaLabel = getCellText(ctaLabelCell);
+          if (ctaLabel) {
+            link.textContent = ctaLabel;
+          }
           moveInstrumentation(buttonLinkCell, link);
           bottomContent.append(link);
         }
