@@ -36,44 +36,23 @@
  
 .content-cards:not(.article-cards) .card-meta-bar {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 4px;
   margin-bottom: 12px;
-  font-size: 12px;
-  color: rgb(255 255 255 / 80%);
-}
- 
-.content-cards:not(.article-cards) .meta-tags-wrapper {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
- 
-.content-cards:not(.article-cards) .meta-category-badge {
-  background: rgb(255 255 255 / 25%);
-  color: #fff;
-  padding: 4px 8px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
- 
-.content-cards:not(.article-cards) .meta-topic-text {
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 11px;
-  color: rgb(255 255 255 / 90%);
-}
- 
-.content-cards:not(.article-cards) .meta-pubdate-text {
-  width: 100%;
-  margin-top: 8px;
   font-size: 13px;
-  color: rgb(255 255 255 / 75%);
+  font-weight: 500;
+}
+ 
+.content-cards:not(.article-cards) .meta-text-line {
+  color: #666;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+ 
+.content-cards:not(.article-cards) .meta-pubdate-line {
+  color: #999;
+  font-size: 13px;
+  font-weight: 400;
 }
  
 .content-cards:not(.article-cards) .card-category-tag {
@@ -295,6 +274,15 @@
   display: none;
 }
 
+.content-cards:not(.article-cards) .content-card-item.blue-solid .meta-text-line {
+  color: rgb(255 255 255 / 85%);
+}
+
+.content-cards:not(.article-cards) .content-card-item.blue-solid .meta-pubdate-line {
+  color: rgb(255 255 255 / 70%);
+  display: none;
+}
+
 .content-cards:not(.article-cards) .content-card-item.default-light {
   background: #fff;
   color: #1a1a1a;
@@ -326,6 +314,14 @@
 
 .content-cards:not(.article-cards) .content-card-item.dark-charcoal .card-button-outline {
   border: 1px solid rgb(255 255 255 / 60%);
+}
+
+.content-cards:not(.article-cards) .content-card-item.dark-charcoal .meta-text-line {
+  color: rgb(255 255 255 / 70%);
+}
+
+.content-cards:not(.article-cards) .content-card-item.dark-charcoal .meta-pubdate-line {
+  color: rgb(255 255 255 / 60%);
 }
 
 .content-cards:not(.article-cards) .content-card-item.dark-charcoal .card-category-tag {

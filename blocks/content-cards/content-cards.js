@@ -159,30 +159,25 @@ export default function decorate(block) {
           const metaContainer = document.createElement('div');
           metaContainer.className = 'card-meta-bar';
 
-          const tagsWrapper = document.createElement('div');
-          tagsWrapper.className = 'meta-tags-wrapper';
+          // Category and Topic on same line
+          const metaTextDiv = document.createElement('div');
+          metaTextDiv.className = 'meta-text-line';
 
+          const metaParts = [];
           if (categoryText) {
-            const catSpan = document.createElement('span');
-            catSpan.className = 'meta-category-badge';
-            catSpan.textContent = categoryText;
-            moveInstrumentation(categoryCell, catSpan);
-            tagsWrapper.append(catSpan);
+            metaParts.push(categoryText);
           }
-
           if (topicText) {
-            const topicSpan = document.createElement('span');
-            topicSpan.className = 'meta-topic-text';
-            topicSpan.textContent = topicText;
-            moveInstrumentation(topicCell, topicSpan);
-            tagsWrapper.append(topicSpan);
+            metaParts.push(topicText);
           }
 
-          metaContainer.append(tagsWrapper);
+          metaTextDiv.textContent = metaParts.join(' | ');
+          metaContainer.append(metaTextDiv);
 
+          // Published date on separate line
           if (pubDateText) {
             const pubDateDiv = document.createElement('div');
-            pubDateDiv.className = 'meta-pubdate-text';
+            pubDateDiv.className = 'meta-pubdate-line';
             pubDateDiv.textContent = pubDateText;
             moveInstrumentation(publishedDateCell, pubDateDiv);
             metaContainer.append(pubDateDiv);
