@@ -178,6 +178,54 @@
           }
         },
         {
+          "title": "List Cards",
+          "id": "list-cards",
+          "plugins": {
+            "da": {
+              "rows": 1,
+              "columns": 4
+            },
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "List Cards",
+                  "filter": "list-cards"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "List Card Item",
+          "id": "list-card-item",
+          "plugins": {
+            "da": {
+              "rows": 1,
+              "columns": 2,
+              "fields": [
+                {
+                  "name": "theme",
+                  "selector": "div:nth-child(1) [data-theme]"
+                },
+                {
+                  "name": "text",
+                  "selector": "div:nth-child(2)"
+                }
+              ]
+            },
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "List Card Item",
+                  "model": "list-card-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Card Component",
           "id": "card-component",
           "plugins": {

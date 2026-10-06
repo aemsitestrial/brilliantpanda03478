@@ -18,6 +18,7 @@
       "columns",
       "content-cards",
       "dm-video",
+      "list-cards",
       "dm-scene7-template",
       "embed",
       "fragment",
@@ -44,6 +45,12 @@
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "list-cards",
+    "components": [
+      "list-card-item"
     ]
   },
   {

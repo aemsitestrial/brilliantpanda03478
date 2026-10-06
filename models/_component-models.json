@@ -278,6 +278,31 @@
     ]
   },
   {
+    "id": "list-card-item",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "theme",
+        "value": "dark",
+        "label": "Card Theme",
+        "options": [
+          { "name": "Dark Navy", "value": "dark" },
+          { "name": "Light Grey", "value": "light" },
+          { "name": "Blue Accent", "value": "blue" },
+          { "name": "Light Fade", "value": "light-fade" }
+        ]
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Tag & Title Content",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "content-cards",
     "fields": []
   },
