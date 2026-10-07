@@ -281,23 +281,49 @@
     "id": "list-card-item",
     "fields": [
       {
+        "component": "text",
+        "name": "category",
+        "value": "",
+        "label": "Category Label (Sub-header)",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "value": "",
+        "label": "Main Title / Heading",
+        "valueType": "string"
+      },
+      {
         "component": "select",
         "valueType": "string",
         "name": "theme",
         "value": "dark",
-        "label": "Card Theme",
+        "label": "Background Style / Theme Type",
         "options": [
-          { "name": "Dark Navy", "value": "dark" },
-          { "name": "Light Grey", "value": "light" },
-          { "name": "Blue Accent", "value": "blue" },
-          { "name": "Light Fade", "value": "light-fade" }
+          { "name": "Solid Dark Navy", "value": "dark" },
+          { "name": "Light Gray Gradient", "value": "light" },
+          { "name": "Solid Royal Blue", "value": "blue" },
+          { "name": "Light Fade Gradient", "value": "light-fade" }
         ]
       },
       {
-        "component": "richtext",
-        "name": "text",
+        "component": "select",
+        "valueType": "string",
+        "name": "textColor",
+        "value": "default",
+        "label": "Text / Theme Color",
+        "options": [
+          { "name": "Default (Auto by Theme)", "value": "default" },
+          { "name": "White", "value": "white" },
+          { "name": "Dark Gray", "value": "dark-gray" }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
         "value": "",
-        "label": "Tag & Title Content",
+        "label": "Link / Target URL (Optional)",
         "valueType": "string"
       }
     ]
