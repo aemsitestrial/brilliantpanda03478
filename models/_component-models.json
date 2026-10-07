@@ -278,6 +278,18 @@
     ]
   },
   {
+    "id": "list-cards",
+    "fields": [
+      {
+        "component": "number",
+        "name": "maxItems",
+        "label": "Maximum Items",
+        "value": "5",
+        "valueType": "number"
+      }
+    ]
+  },
+  {
     "id": "list-card-item",
     "fields": [
       {
