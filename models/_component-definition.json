@@ -183,7 +183,7 @@
           "plugins": {
             "da": {
               "rows": 1,
-              "columns": 4
+              "columns": 2
             },
             "xwalk": {
               "page": {
