@@ -32,7 +32,7 @@
 .list-cards > ul > li {
   list-style: none;
   flex: 0 0 260px;
-  min-height: 340px;
+  min-height: 360px;
   scroll-snap-align: start;
   border-radius: 12px;
   margin: 0;
@@ -49,7 +49,7 @@
 }
 
 .list-cards .list-cards-card-body {
-  padding: 28px 24px;
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -58,48 +58,64 @@
 
 /* Display Elements: Tag & Title */
 .list-cards .list-cards-card-badge {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 16px;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
   margin-top: 0;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .list-cards .list-cards-card-body h3,
 .list-cards .list-cards-card-body p:not(.list-cards-card-badge) {
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1.3;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.25;
   margin: 0;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
 }
 
 /* Theme Variations */
 
-/* Dark Navy */
+/* 1. Dark Navy */
 .list-cards > ul > li.theme-dark {
-  background-color: #1a2332;
+  background-color: #1e2538;
   color: #fff;
 }
 
-/* Light Grey */
+.list-cards > ul > li.theme-dark .list-cards-card-badge {
+  color: #cbd5e1;
+}
+
+/* 2. Light Grey / Gradient */
 .list-cards > ul > li.theme-light {
-  background: linear-gradient(180deg, #e5e7eb 0%, #f3f4f6 100%);
-  color: #1f2937;
+  background: linear-gradient(180deg, #dce2e8 0%, #eceff2 45%, #fff 100%);
+  color: #1a202c;
 }
 
-/* Blue Accent */
+.list-cards > ul > li.theme-light .list-cards-card-badge {
+  color: #2d3748;
+}
+
+/* 3. Blue Accent */
 .list-cards > ul > li.theme-blue {
-  background-color: #3b82f6;
+  background: linear-gradient(180deg, #3b71ca 0%, #3567b8 100%);
   color: #fff;
 }
 
-/* Light Fade Gradient */
+.list-cards > ul > li.theme-blue .list-cards-card-badge {
+  color: #dbeafe;
+}
+
+/* 4. Light Fade / White Gradient */
 .list-cards > ul > li.theme-light-fade {
-  background: linear-gradient(180deg, #e5e7eb 0%, #fff 100%);
-  color: #1f2937;
+  background: linear-gradient(180deg, #dce2e8 0%, #edf1f5 40%, #fff 100%);
+  color: #1a202c;
+}
+
+.list-cards > ul > li.theme-light-fade .list-cards-card-badge {
+  color: #2d3748;
 }
 
 /* Desktop View: Auto-stretch cards across container */
