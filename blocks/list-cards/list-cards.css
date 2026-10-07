@@ -1,4 +1,3 @@
-/* Container Title / Heading */
 .list-cards-wrapper .list-cards-container-title {
   font-size: 36px;
   font-weight: 700;
@@ -8,7 +7,6 @@
   line-height: 1.2;
 }
 
-/* View - Card (M Scroll): Horizontal Scroll Mechanics */
 .list-cards > ul {
   list-style: none;
   margin: 0;
@@ -17,9 +15,7 @@
   gap: 20px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch; /* Momentum scroll */
-  
-  /* Hide Scrollbars */
+  -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -28,7 +24,6 @@
   display: none;
 }
 
-/* Base Card Structure */
 .list-cards > ul > li {
   list-style: none;
   flex: 0 0 260px;
@@ -56,7 +51,6 @@
   box-sizing: border-box;
 }
 
-/* Card Link */
 .list-cards .list-cards-card-link {
   display: flex;
   flex-direction: column;
@@ -66,7 +60,6 @@
   color: inherit;
 }
 
-/* Display Elements: Tag & Title */
 .list-cards .list-cards-card-badge {
   font-size: 11px;
   font-weight: 600;
@@ -88,8 +81,6 @@
 }
 
 /* Theme Variations */
-
-/* 1. Dark Navy */
 .list-cards > ul > li.theme-dark {
   background-color: #1e2538;
   color: #fff;
@@ -99,7 +90,6 @@
   color: #cbd5e1;
 }
 
-/* 2. Light Grey / Gradient */
 .list-cards > ul > li.theme-light {
   background: linear-gradient(180deg, #dce2e8 0%, #eceff2 45%, #fff 100%);
   color: #1a202c;
@@ -109,7 +99,6 @@
   color: #2d3748;
 }
 
-/* 3. Blue Accent */
 .list-cards > ul > li.theme-blue {
   background: linear-gradient(180deg, #3b71ca 0%, #3567b8 100%);
   color: #fff;
@@ -119,7 +108,6 @@
   color: #dbeafe;
 }
 
-/* 4. Light Fade / White Gradient */
 .list-cards > ul > li.theme-light-fade {
   background: linear-gradient(180deg, #dce2e8 0%, #edf1f5 40%, #fff 100%);
   color: #1a202c;
@@ -129,7 +117,7 @@
   color: #2d3748;
 }
 
-/* Text / Theme Color Overrides */
+/* Text Overrides */
 .list-cards > ul > li.text-white,
 .list-cards > ul > li.text-white .list-cards-card-link {
   color: #fff;
@@ -148,9 +136,10 @@
   color: #2d3748;
 }
 
-/* Desktop View: Auto-stretch cards across container */
+/* Responsive Desktop Layout: Allows horizontal scroll if cards exceed viewport width */
 @media (width >= 1024px) {
   .list-cards > ul > li {
-    flex: 1 1 0px;
+    flex: 0 0 calc(25% - 15px);
+    min-width: 250px;
   }
 }

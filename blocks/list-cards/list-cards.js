@@ -1,14 +1,9 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-// Configuration parameter based on sheet spec: Maximum - 4
-const MAX_CARDS = 4;
-
+const DEFAULT_MAX_CARDS = 5;
 const VALID_THEMES = ['dark', 'light', 'blue', 'light-fade'];
 
-/**
- * Normalizes theme name string to class slug
- */
 function normalizeTheme(theme) {
   if (!theme) return '';
   const lower = theme.trim().toLowerCase();
@@ -19,9 +14,6 @@ function normalizeTheme(theme) {
   return VALID_THEMES.includes(lower) ? lower : '';
 }
 
-/**
- * Applies background theme and text color classes
- */
 function applyTheme(li) {
   const themeField = li.querySelector('[data-theme]');
   if (themeField) {
@@ -31,7 +23,6 @@ function applyTheme(li) {
     return;
   }
 
-  // Fallback theme extraction from body elements
   const body = li.querySelector('.list-cards-card-body');
   const firstBlock = body?.firstElementChild;
   const fallbackTheme = normalizeTheme(firstBlock?.textContent);
@@ -62,35 +53,20 @@ function getLinkHref(cell) {
 export default function decorate(block) {
   const ul = document.createElement('ul');
 
-  // Rule: Tag Result Type - 1 card each (Deduplicates category tags)
-  const seenTags = new Set();
+  // Read Maximum Items dynamically from dataset attribute or default
+  const configuredMax = parseInt(block.dataset.maxItems, 10);
+  const isValidMax = !Number.isNaN(configuredMax) && configuredMax > 0;
+  const maxCards = isValidMax ? configuredMax : DEFAULT_MAX_CARDS;
 
-  const selectedRows = [...block.children]
-    .filter((row) => {
-      const cells = [...row.children];
-      let tagText = '';
+  // Filter out any metadata block header row and limit items by maxCards
+  const rows = [...block.children].filter((row) => {
+    // If first row contains block metadata, skip it as a card item
+    const firstCellText = getCellText(row.children[0]);
+    return !firstCellText.toLowerCase().includes('maxitems');
+  });
 
-      if (cells.length >= 4) {
-        // Multi-column schema: [category, title, theme, textColor, link]
-        tagText = getCellText(cells[0]).toUpperCase();
-      } else {
-        // Legacy 2-column or 1-column layout
-        const bodyDiv = cells[1] || cells[0];
-        const tagPara = bodyDiv?.querySelector('p:first-child');
-        tagText = tagPara?.textContent?.trim()?.toUpperCase() || '';
-      }
+  const selectedRows = rows.slice(0, maxCards);
 
-      if (tagText) {
-        if (seenTags.has(tagText)) {
-          return false; // Skip duplicate tag
-        }
-        seenTags.add(tagText);
-      }
-      return true;
-    })
-    .slice(0, MAX_CARDS); // Maximum - 4
-
-  // Build LI Elements
   selectedRows.forEach((row) => {
     const li = document.createElement('li');
     moveInstrumentation(row, li);
@@ -98,8 +74,6 @@ export default function decorate(block) {
     const cells = [...row.children];
 
     if (cells.length >= 4) {
-      // Authored via multi-field model:
-      // cell 0: category, cell 1: title, cell 2: theme, cell 3: textColor, cell 4 (optional): link
       const [categoryCell, titleCell, themeCell, textColorCell, linkCell] = cells;
 
       const cardBody = document.createElement('div');
@@ -131,7 +105,11 @@ export default function decorate(block) {
       const textColorVal = getCellText(textColorCell).toLowerCase();
       if (textColorVal.includes('white')) {
         li.classList.add('text-white');
-      } else if (textColorVal.includes('dark') || textColorVal.includes('gray') || textColorVal.includes('grey')) {
+      } else if (
+        textColorVal.includes('dark')
+        || textColorVal.includes('gray')
+        || textColorVal.includes('grey')
+      ) {
         li.classList.add('text-dark-gray');
       }
 
@@ -147,7 +125,6 @@ export default function decorate(block) {
         li.append(cardBody);
       }
     } else {
-      // Legacy 1-2 column layout
       while (row.firstElementChild) li.append(row.firstElementChild);
 
       [...li.children].forEach((div) => {
@@ -164,15 +141,15 @@ export default function decorate(block) {
       });
       applyTheme(li);
 
-      // Check if there is an anchor link in the body
       const anchor = li.querySelector('.list-cards-card-body a[href]');
       if (anchor) {
         const linkWrapper = document.createElement('a');
         linkWrapper.className = 'list-cards-card-link';
         linkWrapper.href = anchor.href;
         const bodyDiv = li.querySelector('.list-cards-card-body');
-        if (anchor.parentElement && anchor.parentElement.tagName === 'P' && anchor.parentElement.children.length === 1) {
-          anchor.parentElement.remove();
+        const pParent = anchor.parentElement;
+        if (pParent && pParent.tagName === 'P' && pParent.children.length === 1) {
+          pParent.remove();
         } else {
           anchor.remove();
         }
@@ -186,7 +163,6 @@ export default function decorate(block) {
     ul.append(li);
   });
 
-  // Optimize Images if present
   ul.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(
       img.src,
