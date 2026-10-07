@@ -19,7 +19,6 @@ function applyTheme(li) {
     themeField.remove();
     return;
   }
-
   // Fallback theme extraction from block content
   const firstBlock = body?.firstElementChild;
   const fallbackTheme = firstBlock?.textContent?.trim()?.toLowerCase();
@@ -73,11 +72,9 @@ export default function decorate(block) {
         }
       }
     });
-
     applyTheme(li);
     ul.append(li);
   });
-
   // Optimize Images if present
   ul.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(

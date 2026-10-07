@@ -22,12 +22,10 @@ function renderImageCell(cell, className) {
   wrapper.append(optimizedPic);
   return wrapper;
 }
-
 function getLinkCell(buttonLinkCell) {
   if (!buttonLinkCell) return null;
   return buttonLinkCell.querySelector('a');
 }
-
 export default function decorate(block) {
   const isArticleVariant = block.classList.contains('article-cards');
   const ul = document.createElement('ul');
@@ -242,9 +240,7 @@ export default function decorate(block) {
         li.append(topContent, bottomContent);
       }
     }
-
     ul.append(li);
   });
-
   block.replaceChildren(ul);
 }
