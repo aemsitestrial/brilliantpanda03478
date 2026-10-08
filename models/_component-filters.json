@@ -19,6 +19,7 @@
       "content-cards",
       "dm-video",
       "list-cards",
+      "hero-cards",
       "dm-scene7-template",
       "embed",
       "fragment",
@@ -51,6 +52,12 @@
     "id": "list-cards",
     "components": [
       "list-card-item"
+    ]
+  },
+  {
+    "id": "hero-cards",
+    "components": [
+      "hero-card-item"
     ]
   },
   {
