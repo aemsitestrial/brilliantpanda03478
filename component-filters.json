@@ -23,6 +23,7 @@
       "topic-lists",
       "list-table",
       "card-image",
+      "card-two-col",
       "dm-scene7-template",
       "embed",
       "fragment",
@@ -79,6 +80,12 @@
     "id": "card-image",
     "components": [
       "card-image-item"
+    ]
+  },
+  {
+    "id": "card-two-col",
+    "components": [
+      "card-two-col-item"
     ]
   },
   {
