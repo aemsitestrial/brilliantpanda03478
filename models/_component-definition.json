@@ -318,6 +318,41 @@
           }
         },
         {
+          "title": "Card Image",
+          "id": "card-image",
+          "plugins": {
+            "da": {
+              "rows": 1,
+              "columns": 2
+            },
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Card Image",
+                  "filter": "card-image",
+                  "model": "card-image"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Card Image Item",
+          "id": "card-image-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Card Image Item",
+                  "model": "card-image-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Card Component",
           "id": "card-component",
           "plugins": {
