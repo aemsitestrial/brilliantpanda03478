@@ -20,6 +20,7 @@
       "dm-video",
       "list-cards",
       "hero-cards",
+      "topic-lists",
       "dm-scene7-template",
       "embed",
       "fragment",
@@ -58,6 +59,12 @@
     "id": "hero-cards",
     "components": [
       "hero-card-item"
+    ]
+  },
+  {
+    "id": "topic-lists",
+    "components": [
+      "topic-lists-item"
     ]
   },
   {
