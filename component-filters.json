@@ -21,6 +21,7 @@
       "list-cards",
       "hero-cards",
       "topic-lists",
+      "list-table",
       "dm-scene7-template",
       "embed",
       "fragment",
@@ -65,6 +66,12 @@
     "id": "topic-lists",
     "components": [
       "topic-lists-item"
+    ]
+  },
+  {
+    "id": "list-table",
+    "components": [
+      "list-table-item"
     ]
   },
   {
