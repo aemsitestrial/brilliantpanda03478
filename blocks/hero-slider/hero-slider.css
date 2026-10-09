@@ -1,15 +1,15 @@
-.carousel-hero-wrapper {
+.hero-slider-wrapper {
   width: 100%;
   position: relative;
   overflow: hidden;
 }
 
-.carousel-hero {
+.hero-slider {
   position: relative;
   width: 100%;
 }
 
-.carousel-hero-track {
+.hero-slider-track {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -18,14 +18,14 @@
   width: 100%;
 }
 
-.carousel-hero-slide {
+.hero-slider-slide {
   flex: 0 0 100%;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Inner Hero Content Styles */
-.carousel-hero .hero2 {
+/* Inner Hero Styles */
+.hero-slider .hero2 {
   position: relative;
   min-height: 900px;
   display: flex;
@@ -37,7 +37,7 @@
   overflow: hidden;
 }
 
-.carousel-hero .hero2::before {
+.hero-slider .hero2::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -45,7 +45,7 @@
   z-index: 0;
 }
 
-.carousel-hero .hero2-content {
+.hero-slider .hero2-content {
   position: relative;
   z-index: 1;
   display: flex;
@@ -61,7 +61,7 @@
   margin: 0 auto;
 }
 
-.carousel-hero .hero2-icon {
+.hero-slider .hero2-icon {
   width: 64px;
   height: 64px;
   object-fit: contain;
@@ -72,7 +72,7 @@
     hue-rotate(221deg) brightness(98%) contrast(96%);
 }
 
-.carousel-hero .hero2-eyebrow {
+.hero-slider .hero2-eyebrow {
   color: #4673db;
   margin: 0 0 16px;
   font-size: 16px;
@@ -80,7 +80,7 @@
   line-height: 1.4;
 }
 
-.carousel-hero .hero2-title {
+.hero-slider .hero2-title {
   width: 100%;
   max-width: 1200px;
   margin: 24px 0 40px;
@@ -93,18 +93,18 @@
   text-wrap: balance;
 }
 
-.carousel-hero .hero2-description {
+.hero-slider .hero2-description {
   max-width: 800px;
   margin: 0 0 32px;
   text-align: center;
 }
 
-.carousel-hero .hero2-description p {
+.hero-slider .hero2-description p {
   margin: 0;
 }
 
 /* Controls */
-.carousel-hero-btn {
+.hero-slider-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -119,40 +119,40 @@
   color: #000;
 }
 
-.carousel-hero-btn.prev {
+.hero-slider-btn.prev {
   left: 24px;
 }
 
-.carousel-hero-btn.next {
+.hero-slider-btn.next {
   right: 24px;
 }
 
 @media (width <= 1024px) {
-  .carousel-hero .hero2 {
+  .hero-slider .hero2 {
     min-height: 750px;
   }
 
-  .carousel-hero .hero2-title {
+  .hero-slider .hero2-title {
     font-size: 64px;
   }
 }
 
 @media (width <= 767px) {
-  .carousel-hero .hero2 {
+  .hero-slider .hero2 {
     min-height: 600px;
   }
 
-  .carousel-hero .hero2-content {
+  .hero-slider .hero2-content {
     padding: 0 20px;
   }
 
-  .carousel-hero .hero2-icon {
+  .hero-slider .hero2-icon {
     width: 48px;
     height: 48px;
     margin-bottom: 20px;
   }
 
-  .carousel-hero .hero2-eyebrow {
+  .hero-slider .hero2-eyebrow {
     font-size: 14px;
   }
 }

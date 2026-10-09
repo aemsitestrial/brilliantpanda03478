@@ -29,7 +29,7 @@ function getHeroContent(row) {
 
 function decorateSlide(row) {
   const slide = document.createElement('li');
-  slide.className = 'carousel-hero-slide hero2';
+  slide.className = 'hero-slider-slide hero2';
 
   const content = getHeroContent(row);
 
@@ -112,7 +112,7 @@ function decorateSlide(row) {
 
 export default function decorate(block) {
   const slidesTrack = document.createElement('ul');
-  slidesTrack.className = 'carousel-hero-track';
+  slidesTrack.className = 'hero-slider-track';
 
   const rows = [...block.children];
 
@@ -122,17 +122,17 @@ export default function decorate(block) {
     slidesTrack.append(slide);
   });
 
-  // Navigation Controls
+  // Controls Navigation
   const navContainer = document.createElement('div');
-  navContainer.className = 'carousel-hero-nav';
+  navContainer.className = 'hero-slider-nav';
 
   const prevBtn = document.createElement('button');
-  prevBtn.className = 'carousel-hero-btn prev';
+  prevBtn.className = 'hero-slider-btn prev';
   prevBtn.ariaLabel = 'Previous Slide';
   prevBtn.innerHTML = '&#10094;';
 
   const nextBtn = document.createElement('button');
-  nextBtn.className = 'carousel-hero-btn next';
+  nextBtn.className = 'hero-slider-btn next';
   nextBtn.ariaLabel = 'Next Slide';
   nextBtn.innerHTML = '&#10095;';
 
@@ -142,7 +142,7 @@ export default function decorate(block) {
   const totalSlides = rows.length;
 
   function updateCarousel(newIndex) {
-    const slides = slidesTrack.querySelectorAll('.carousel-hero-slide');
+    const slides = slidesTrack.querySelectorAll('.hero-slider-slide');
     slides[activeIndex].classList.remove('active');
 
     activeIndex = (newIndex + totalSlides) % totalSlides;

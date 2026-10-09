@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Carousel Hero",
-      "id": "carousel-hero",
+      "title": "Hero Slider",
+      "id": "hero-slider",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Carousel Hero",
-              "model": "carousel-hero",
-              "filter": "carousel-hero"
+              "name": "Hero Slider",
+              "model": "hero-slider",
+              "filter": "hero-slider"
             }
           }
         }
       }
     },
     {
-      "title": "Carousel Hero Slide Item",
-      "id": "carousel-hero-item",
+      "title": "Hero Slider Item",
+      "id": "hero-slider-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Carousel Hero Slide Item",
-              "model": "carousel-hero-item"
+              "name": "Hero Slider Item",
+              "model": "hero-slider-item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "carousel-hero",
+      "id": "hero-slider",
       "fields": [
         {
           "component": "select",
@@ -54,7 +54,7 @@
       ]
     },
     {
-      "id": "carousel-hero-item",
+      "id": "hero-slider-item",
       "fields": [
         {
           "component": "reference",
@@ -138,8 +138,8 @@
   ],
   "filters": [
     {
-      "id": "carousel-hero",
-      "components": ["carousel-hero-item"]
+      "id": "hero-slider",
+      "components": ["hero-slider-item"]
     }
   ]
 }
