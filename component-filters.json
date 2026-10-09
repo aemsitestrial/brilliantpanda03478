@@ -20,6 +20,9 @@
       "dm-video",
       "list-cards",
       "hero-cards",
+      "carousel-hero",
+      "hero-slider",
+      "cta",
       "topic-lists",
       "list-table",
       "card-image",
@@ -41,7 +44,7 @@
       "video",
       "hero-slider",
       "hero2",
-      "cta"     
+      "cta"
     ]
   },
   {
@@ -114,6 +117,18 @@
     "id": "carousel",
     "components": [
       "carousel-item"
+    ]
+  },
+  {
+    "id": "carousel-hero",
+    "components": [
+      "carousel-hero-item"
+    ]
+  },
+  {
+    "id": "hero-slider",
+    "components": [
+      "hero-slider-item"
     ]
   },
   {
