@@ -42,9 +42,7 @@
       "title",
       "teaser",
       "video",
-      "hero-slider",
-      "hero2",
-      "cta"
+      "hero2"
     ]
   },
   {
@@ -123,6 +121,12 @@
     "id": "carousel-hero",
     "components": [
       "carousel-hero-item"
+    ]
+  },
+  {
+    "id": "hero2",
+    "components": [
+      "cta-item"
     ]
   },
   {
