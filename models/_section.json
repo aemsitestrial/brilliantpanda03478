@@ -76,7 +76,8 @@
         "title",
         "teaser",
         "video",
-        "hero2"
+        "hero2",
+        "cta"
       ]
     }
   ]
