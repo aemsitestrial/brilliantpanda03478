@@ -99,6 +99,22 @@ export default function decorate(block) {
         if (img) {
           const pic = createOptimizedPicture(img.src, img.alt || '', false, [{ width: '400' }]);
           imgWrapper.append(pic);
+        } else {
+          imgWrapper.classList.add('has-placeholder');
+          const placeholderSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          placeholderSvg.setAttribute('viewBox', '0 0 24 24');
+          placeholderSvg.setAttribute('class', 'placeholder-icon');
+          placeholderSvg.setAttribute('fill', 'none');
+          placeholderSvg.setAttribute('stroke', 'currentColor');
+          placeholderSvg.setAttribute('stroke-width', '1.5');
+          placeholderSvg.setAttribute('stroke-linecap', 'round');
+          placeholderSvg.setAttribute('stroke-linejoin', 'round');
+          placeholderSvg.innerHTML = `
+            <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          `;
+          imgWrapper.append(placeholderSvg);
         }
         li.append(imgWrapper);
 
@@ -107,10 +123,16 @@ export default function decorate(block) {
 
         const catText = getCellText(catCell);
         const readTime = getCellText(readCell);
-        if (catText) {
+        if (catText || readTime) {
           const meta = document.createElement('div');
           meta.className = 'card-meta';
-          meta.textContent = readTime ? `${catText} | | ${readTime}` : `${catText} | |`;
+          if (catText && readTime) {
+            meta.textContent = `${catText} | ${readTime}`;
+          } else if (catText) {
+            meta.textContent = catText;
+          } else {
+            meta.textContent = readTime;
+          }
           cardContent.append(meta);
         }
 

@@ -63,6 +63,12 @@
   object-fit: cover;
 }
 
+.article-cards .card-image-wrapper .placeholder-icon {
+  width: 48px;
+  height: 48px;
+  color: #94a3b8;
+}
+
 .article-cards .card-content {
   display: flex;
   flex-direction: column;
