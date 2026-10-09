@@ -1,0 +1,158 @@
+.hero-carousel-wrapper {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-carousel {
+  position: relative;
+  width: 100%;
+}
+
+.hero-carousel-track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.hero-carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Inner Hero Styles */
+.hero-carousel .hero2 {
+  position: relative;
+  min-height: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.hero-carousel .hero2::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgb(255 255 255 / 80%);
+  z-index: 0;
+}
+
+.hero-carousel .hero2-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 900px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 24px;
+  margin: 0 auto;
+}
+
+.hero-carousel .hero2-icon {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: 24px;
+  filter:
+    brightness(0) saturate(100%)
+    invert(36%) sepia(95%) saturate(1941%)
+    hue-rotate(221deg) brightness(98%) contrast(96%);
+}
+
+.hero-carousel .hero2-eyebrow {
+  color: #4673db;
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.hero-carousel .hero2-title {
+  width: 100%;
+  max-width: 1200px;
+  margin: 24px 0 40px;
+  color: #000;
+  font-size: 64px;
+  font-weight: 400;
+  font-family: Arial, sans-serif !important;
+  line-height: 1.1;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.hero-carousel .hero2-description {
+  max-width: 800px;
+  margin: 0 0 32px;
+  text-align: center;
+}
+
+.hero-carousel .hero2-description p {
+  margin: 0;
+}
+
+/* Controls */
+.hero-carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgb(255 255 255 / 80%);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  color: #000;
+}
+
+.hero-carousel-btn.prev {
+  left: 24px;
+}
+
+.hero-carousel-btn.next {
+  right: 24px;
+}
+
+@media (width <= 1024px) {
+  .hero-carousel .hero2 {
+    min-height: 750px;
+  }
+
+  .hero-carousel .hero2-title {
+    font-size: 64px;
+  }
+}
+
+@media (width <= 767px) {
+  .hero-carousel .hero2 {
+    min-height: 600px;
+  }
+
+  .hero-carousel .hero2-content {
+    padding: 0 20px;
+  }
+
+  .hero-carousel .hero2-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+  }
+
+  .hero-carousel .hero2-eyebrow {
+    font-size: 14px;
+  }
+}
