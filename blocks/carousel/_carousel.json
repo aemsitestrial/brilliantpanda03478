@@ -47,7 +47,7 @@
           "valueType": "string",
           "name": "media_imageAlt",
           "value": "",
-          "label": "Bacgkround Alt"
+          "label": "Background Alt"
         },
         {
           "component": "richtext",
@@ -84,7 +84,7 @@
   "filters": [
     {
       "id": "carousel",
-      "components": ["carousel-item"]
+      "components": ["carousel-item","hero2"]
     }
   ]
 }

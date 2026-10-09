@@ -74,7 +74,9 @@
         "title",
         "teaser",
         "video",
-        "hero-slider"
+        "hero-slider",
+        "hero2",
+        "cta"
       ]
     }
   ]
