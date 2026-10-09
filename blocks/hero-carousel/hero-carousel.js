@@ -1,5 +1,3 @@
-import { loadCSS } from '../../scripts/aem.js';
-
 function getFieldElement(block, name) {
   return block.querySelector(`[data-aue-prop="${name}"]`);
 }
@@ -31,7 +29,7 @@ function getHeroContent(row) {
 
 function decorateSlide(row) {
   const slide = document.createElement('li');
-  slide.className = 'hero-carousel-slide hero2';
+  slide.className = 'carousel-hero-slide hero2';
 
   const content = getHeroContent(row);
 
@@ -114,7 +112,7 @@ function decorateSlide(row) {
 
 export default function decorate(block) {
   const slidesTrack = document.createElement('ul');
-  slidesTrack.className = 'hero-carousel-track';
+  slidesTrack.className = 'carousel-hero-track';
 
   const rows = [...block.children];
 
@@ -124,17 +122,17 @@ export default function decorate(block) {
     slidesTrack.append(slide);
   });
 
-  // Controls Navigation
+  // Navigation Controls
   const navContainer = document.createElement('div');
-  navContainer.className = 'hero-carousel-nav';
+  navContainer.className = 'carousel-hero-nav';
 
   const prevBtn = document.createElement('button');
-  prevBtn.className = 'hero-carousel-btn prev';
+  prevBtn.className = 'carousel-hero-btn prev';
   prevBtn.ariaLabel = 'Previous Slide';
   prevBtn.innerHTML = '&#10094;';
 
   const nextBtn = document.createElement('button');
-  nextBtn.className = 'hero-carousel-btn next';
+  nextBtn.className = 'carousel-hero-btn next';
   nextBtn.ariaLabel = 'Next Slide';
   nextBtn.innerHTML = '&#10095;';
 
@@ -144,7 +142,7 @@ export default function decorate(block) {
   const totalSlides = rows.length;
 
   function updateCarousel(newIndex) {
-    const slides = slidesTrack.querySelectorAll('.hero-carousel-slide');
+    const slides = slidesTrack.querySelectorAll('.carousel-hero-slide');
     slides[activeIndex].classList.remove('active');
 
     activeIndex = (newIndex + totalSlides) % totalSlides;
@@ -158,7 +156,4 @@ export default function decorate(block) {
 
   block.textContent = '';
   block.append(slidesTrack, navContainer);
-
-  // Optional CSS load if CTA block CSS exists in project
-  loadCSS(`${window.hlx.codeBasePath}/blocks/hero-carousel/hero-carousel.css`);
 }

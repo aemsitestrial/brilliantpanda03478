@@ -1,15 +1,15 @@
-.hero-carousel-wrapper {
+.carousel-hero-wrapper {
   width: 100%;
   position: relative;
   overflow: hidden;
 }
 
-.hero-carousel {
+.carousel-hero {
   position: relative;
   width: 100%;
 }
 
-.hero-carousel-track {
+.carousel-hero-track {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -18,14 +18,14 @@
   width: 100%;
 }
 
-.hero-carousel-slide {
+.carousel-hero-slide {
   flex: 0 0 100%;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Inner Hero Styles */
-.hero-carousel .hero2 {
+/* Inner Hero Content Styles */
+.carousel-hero .hero2 {
   position: relative;
   min-height: 900px;
   display: flex;
@@ -37,7 +37,7 @@
   overflow: hidden;
 }
 
-.hero-carousel .hero2::before {
+.carousel-hero .hero2::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -45,7 +45,7 @@
   z-index: 0;
 }
 
-.hero-carousel .hero2-content {
+.carousel-hero .hero2-content {
   position: relative;
   z-index: 1;
   display: flex;
@@ -61,7 +61,7 @@
   margin: 0 auto;
 }
 
-.hero-carousel .hero2-icon {
+.carousel-hero .hero2-icon {
   width: 64px;
   height: 64px;
   object-fit: contain;
@@ -72,7 +72,7 @@
     hue-rotate(221deg) brightness(98%) contrast(96%);
 }
 
-.hero-carousel .hero2-eyebrow {
+.carousel-hero .hero2-eyebrow {
   color: #4673db;
   margin: 0 0 16px;
   font-size: 16px;
@@ -80,7 +80,7 @@
   line-height: 1.4;
 }
 
-.hero-carousel .hero2-title {
+.carousel-hero .hero2-title {
   width: 100%;
   max-width: 1200px;
   margin: 24px 0 40px;
@@ -93,18 +93,18 @@
   text-wrap: balance;
 }
 
-.hero-carousel .hero2-description {
+.carousel-hero .hero2-description {
   max-width: 800px;
   margin: 0 0 32px;
   text-align: center;
 }
 
-.hero-carousel .hero2-description p {
+.carousel-hero .hero2-description p {
   margin: 0;
 }
 
 /* Controls */
-.hero-carousel-btn {
+.carousel-hero-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -119,40 +119,40 @@
   color: #000;
 }
 
-.hero-carousel-btn.prev {
+.carousel-hero-btn.prev {
   left: 24px;
 }
 
-.hero-carousel-btn.next {
+.carousel-hero-btn.next {
   right: 24px;
 }
 
 @media (width <= 1024px) {
-  .hero-carousel .hero2 {
+  .carousel-hero .hero2 {
     min-height: 750px;
   }
 
-  .hero-carousel .hero2-title {
+  .carousel-hero .hero2-title {
     font-size: 64px;
   }
 }
 
 @media (width <= 767px) {
-  .hero-carousel .hero2 {
+  .carousel-hero .hero2 {
     min-height: 600px;
   }
 
-  .hero-carousel .hero2-content {
+  .carousel-hero .hero2-content {
     padding: 0 20px;
   }
 
-  .hero-carousel .hero2-icon {
+  .carousel-hero .hero2-icon {
     width: 48px;
     height: 48px;
     margin-bottom: 20px;
   }
 
-  .hero-carousel .hero2-eyebrow {
+  .carousel-hero .hero2-eyebrow {
     font-size: 14px;
   }
 }
