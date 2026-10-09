@@ -24,6 +24,7 @@
       "list-table",
       "card-image",
       "card-two-col",
+      "article-cards",
       "dm-scene7-template",
       "embed",
       "fragment",
@@ -86,6 +87,12 @@
     "id": "card-two-col",
     "components": [
       "card-two-col-item"
+    ]
+  },
+  {
+    "id": "article-cards",
+    "components": [
+      "article-card-item"
     ]
   },
   {
