@@ -38,7 +38,10 @@
       "text",
       "title",
       "teaser",
-      "video"
+      "video",
+      "hero-slider",
+      "hero2",
+      "cta"     
     ]
   },
   {
