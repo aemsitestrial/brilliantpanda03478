@@ -55,17 +55,21 @@
           "component": "select",
           "valueType": "string",
           "name": "carouselType",
-          "label": "Carousel Type",
+          "label": "carousel type",
           "value": "slider",
           "options": [
-            { "name": "Slider (default)", "value": "slider" }
+            {
+              "name": "Slider (default)",
+              "value": "slider"
+            }
           ]
         },
         {
           "component": "text",
           "valueType": "string",
           "name": "motionType",
-          "label": "Motion Type"
+          "label": "Motion Type",
+          "value": ""
         }
       ]
     },
