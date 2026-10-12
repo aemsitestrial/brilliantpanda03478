@@ -36,6 +36,18 @@
           "value": "",
           "required": true
         },
+
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "arrowIcon",
+          "label": "Arrow Icon",
+          "validation": {
+            "pattern": ".*\\.svg$",
+            "message": "Only SVG files are allowed."
+          }
+        },
+
         {
           "component": "select",
           "valueType": "string",
@@ -77,18 +89,17 @@
         },
 
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "ariaLabel",
-          "label": "ARIA Label",
-          "value": ""
-        },
-        {
           "component": "select",
           "valueType": "string",
           "name": "shape",
           "label": "Shape",
           "value": "rectangle",
+          "condition": {
+            "in": [
+              { "var": "ctaView" },
+              ["primary", "secondary"]
+            ]
+          },
           "options": [
             {
               "name": "Rectangle",
@@ -109,7 +120,10 @@
           "valueType": "string",
           "name": "backgroundColor",
           "label": "Background Color",
-          "value": ""
+          "value": "",
+          "condition": {
+            "===": [{ "var": "ctaView" }, "primary"]
+          }
         },
         {
           "component": "text",
@@ -123,7 +137,13 @@
           "valueType": "string",
           "name": "borderColor",
           "label": "Border Color",
-          "value": ""
+          "value": "",
+          "condition": {
+            "in": [
+              { "var": "ctaView" },
+              ["primary", "secondary"]
+            ]
+          }
         },
         {
           "component": "select",
@@ -143,6 +163,26 @@
             {
               "name": "Right",
               "value": "right"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "arrowColor",
+          "label": "Arrow Color",
+          "value": "white",
+          "condition": {
+            "!==": [{ "var": "arrowDirection" }, "none"]
+          },
+          "options": [
+            {
+              "name": "White",
+              "value": "white"
+            },
+            {
+              "name": "Black",
+              "value": "black"
             }
           ]
         }

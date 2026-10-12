@@ -1,13 +1,15 @@
 const DEFAULTS = {
   text_cta: '',
   ctaLink: '',
+  arrowIcon: null,
   linkTarget: 'default',
-  ariaLabel: '',
+  ctaView: 'default',
   shape: 'rectangle',
   backgroundColor: '',
   textColor: '',
   borderColor: '',
   arrowDirection: 'none',
+  arrowColor: 'white',
 };
 
 const ALLOWED_SHAPES = [
@@ -38,6 +40,21 @@ const ALLOWED_ARROWS = [
   'left',
   'right',
 ];
+
+const ALLOWED_ARROW_COLORS = [
+  'white',
+  'black',
+];
+
+function normalizeArrowColor(value) {
+  const color = String(value).trim().toLowerCase();
+
+  if (ALLOWED_ARROW_COLORS.includes(color)) {
+    return color;
+  }
+
+  return DEFAULTS.arrowColor;
+}
 
 function getFieldValue(block, index, fallback = '') {
   const field = block.children[index];
@@ -77,54 +94,45 @@ function isValidCssColor(value) {
   return Boolean(element.style.color);
 }
 
-function createArrow(direction) {
+function createArrow(direction, arrowIcon, arrowColor) {
   const wrapper = document.createElement('span');
 
   wrapper.className = `cta-arrow cta-arrow-${direction}`;
   wrapper.setAttribute('aria-hidden', 'true');
 
-  const svg = document.createElementNS(
-    'http://www.w3.org/2000/svg',
-    'svg',
-  );
-
-  svg.classList.add('cta-arrow-icon');
-
-  svg.setAttribute('viewBox', '0 0 24 24');
-  svg.setAttribute('width', '1em');
-  svg.setAttribute('height', '1em');
-  svg.setAttribute('focusable', 'false');
-  svg.setAttribute('aria-hidden', 'true');
-
-  const path = document.createElementNS(
-    'http://www.w3.org/2000/svg',
-    'path',
-  );
-
-  if (direction === 'left') {
-    path.setAttribute(
-      'd',
-      'M19 12H5M12 19l-7-7 7-7',
-    );
-  } else {
-    path.setAttribute(
-      'd',
-      'M5 12h14M12 5l7 7-7 7',
-    );
+  if (!arrowIcon) {
+    return wrapper;
   }
 
-  path.setAttribute('fill', 'none');
-  path.setAttribute('stroke', 'currentColor');
-  path.setAttribute('stroke-width', '2');
-  path.setAttribute('stroke-linecap', 'round');
-  path.setAttribute('stroke-linejoin', 'round');
+  const arrow = arrowIcon.cloneNode(true);
 
-  svg.appendChild(path);
-  wrapper.appendChild(svg);
+  arrow.classList.add('cta-arrow-icon', `cta-arrow-icon-${arrowColor}`);
+
+  const arrowSrc = arrow.getAttribute('src') || '';
+  const arrowPath = arrowSrc.split(/[?#]/)[0].toLowerCase();
+  const isSvgFormat = /[?&]format=svg(&|$)/i.test(arrowSrc);
+
+  if (
+    arrowSrc
+    && !arrowPath.endsWith('.svg')
+    && !isSvgFormat
+  ) {
+    // eslint-disable-next-line no-console
+    console.error(
+      'CTA Arrow Icon must be SVG format only.',
+    );
+
+    return wrapper;
+  }
+
+  if (direction === 'left') {
+    arrow.classList.add('cta-arrow-icon-left');
+  }
+
+  wrapper.appendChild(arrow);
 
   return wrapper;
 }
-
 function readBlockContent(block) {
   return {
     text_cta: getFieldValue(
@@ -139,6 +147,9 @@ function readBlockContent(block) {
       DEFAULTS.ctaLink,
     ),
 
+    arrowIcon: block.children[2]
+      ?.querySelector('img'),
+
     linkTarget: normalizeLinkTarget(
       [...block.children]
         .map((cell) => cell.textContent.trim().toLowerCase())
@@ -148,14 +159,8 @@ function readBlockContent(block) {
 
     ctaView: getFieldValue(
       block,
-      3,
-      'default',
-    ),
-
-    ariaLabel: getFieldValue(
-      block,
       4,
-      DEFAULTS.ariaLabel,
+      'default',
     ),
 
     shape: normalizeShape(
@@ -191,12 +196,18 @@ function readBlockContent(block) {
         DEFAULTS.arrowDirection,
       ),
     ),
+
+    arrowColor: normalizeArrowColor(
+      getFieldValue(
+        block,
+        10,
+        DEFAULTS.arrowColor,
+      ),
+    ),
   };
 }
 
 function createCta(data) {
-  console.log('linkTarget:', data.linkTarget);
-  console.log('CTA data:', data);
   if (!data.text_cta || !data.ctaLink) {
     return null;
   }
@@ -206,13 +217,14 @@ function createCta(data) {
   link.className = [
     'cta-link',
     `cta-link-${data.shape}`,
+    `cta-view-${data.ctaView}`,
   ].join(' ');
 
   link.href = data.ctaLink;
 
   link.setAttribute(
     'aria-label',
-    data.ariaLabel || data.text_cta,
+    data.text_cta,
   );
 
   const normalizedTarget = String(data.linkTarget || '')
@@ -232,10 +244,10 @@ function createCta(data) {
     link.rel = 'noopener noreferrer';
   }
 
-  console.log('opensNewTab:', opensNewTab);
-  console.log('target:', link.target);
-
-  if (isValidCssColor(data.backgroundColor)) {
+  if (
+    data.ctaView === 'primary'
+    && isValidCssColor(data.backgroundColor)
+  ) {
     link.style.backgroundColor = data.backgroundColor;
   }
 
@@ -243,13 +255,20 @@ function createCta(data) {
     link.style.color = data.textColor;
   }
 
-  if (isValidCssColor(data.borderColor)) {
+  if (
+    ['primary', 'secondary'].includes(data.ctaView)
+    && isValidCssColor(data.borderColor)
+  ) {
     link.style.borderColor = data.borderColor;
   }
 
   if (data.arrowDirection === 'left') {
     link.appendChild(
-      createArrow('left'),
+      createArrow(
+        'left',
+        data.arrowIcon,
+        data.arrowColor,
+      ),
     );
   }
 
@@ -262,7 +281,11 @@ function createCta(data) {
 
   if (data.arrowDirection === 'right') {
     link.appendChild(
-      createArrow('right'),
+      createArrow(
+        'right',
+        data.arrowIcon,
+        data.arrowColor,
+      ),
     );
   }
 
