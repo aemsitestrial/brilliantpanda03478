@@ -26,16 +26,19 @@
 
 .list-cards > ul > li {
   list-style: none;
-  flex: 0 0 260px;
-  min-height: 360px;
+  flex: 0 0 280px;
+  min-height: 480px;
   scroll-snap-align: start;
-  border-radius: 12px;
+  border-radius: 16px;
   margin: 0;
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
   cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .list-cards > ul > li:hover {
@@ -47,6 +50,7 @@
   padding: 32px 28px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   height: 100%;
   box-sizing: border-box;
 }
@@ -62,59 +66,68 @@
 
 .list-cards .list-cards-card-badge {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   margin-top: 0;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
-.list-cards .list-cards-card-body h3,
-.list-cards .list-cards-card-title,
-.list-cards .list-cards-card-body p:not(.list-cards-card-badge) {
-  font-size: 26px;
-  font-weight: 500;
-  line-height: 1.25;
-  margin: 0;
+.list-cards .list-cards-card-title {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 16px;
   letter-spacing: -0.02em;
 }
 
-/* Theme Variations */
-.list-cards > ul > li.theme-dark {
-  background-color: #1e2538;
-  color: #fff;
+.list-cards .list-cards-card-desc {
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0;
+  opacity: 0.85;
+  max-width: 240px;
 }
 
-.list-cards > ul > li.theme-dark .list-cards-card-badge {
-  color: #cbd5e1;
+.list-cards .list-cards-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 24px;
+}
+
+.list-cards .list-cards-card-cta .cta-arrow {
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.list-cards > ul > li:hover .cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Theme Variations matching Image 1 */
+.list-cards > ul > li.theme-dark {
+  background: linear-gradient(180deg, #324460 0%, #172131 100%);
+  color: #fff;
 }
 
 .list-cards > ul > li.theme-light {
-  background: linear-gradient(180deg, #dce2e8 0%, #eceff2 45%, #fff 100%);
-  color: #1a202c;
-}
-
-.list-cards > ul > li.theme-light .list-cards-card-badge {
-  color: #2d3748;
+  background: #e2e7ec;
+  color: #111;
 }
 
 .list-cards > ul > li.theme-blue {
-  background: linear-gradient(180deg, #3b71ca 0%, #3567b8 100%);
+  background: linear-gradient(180deg, #5b8df6 0%, #3563c9 100%);
   color: #fff;
-}
-
-.list-cards > ul > li.theme-blue .list-cards-card-badge {
-  color: #dbeafe;
 }
 
 .list-cards > ul > li.theme-light-fade {
   background: linear-gradient(180deg, #dce2e8 0%, #edf1f5 40%, #fff 100%);
-  color: #1a202c;
-}
-
-.list-cards > ul > li.theme-light-fade .list-cards-card-badge {
-  color: #2d3748;
+  color: #111;
 }
 
 /* Text Overrides */
@@ -123,20 +136,11 @@
   color: #fff;
 }
 
-.list-cards > ul > li.text-white .list-cards-card-badge {
-  color: rgb(255 255 255 / 85%);
-}
-
 .list-cards > ul > li.text-dark-gray,
 .list-cards > ul > li.text-dark-gray .list-cards-card-link {
   color: #1a202c;
 }
 
-.list-cards > ul > li.text-dark-gray .list-cards-card-badge {
-  color: #2d3748;
-}
-
-/* Responsive Desktop Layout: Allows horizontal scroll if cards exceed viewport width */
 @media (width >= 1024px) {
   .list-cards > ul > li {
     flex: 0 0 calc(25% - 15px);

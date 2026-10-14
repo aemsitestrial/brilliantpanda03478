@@ -67,6 +67,18 @@
           "valueType": "string"
         },
         {
+          "component": "textarea",
+          "name": "description",
+          "value": "",
+          "label": "Description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "bgImage",
+          "label": "Card Background Image"
+        },
+        {
           "component": "select",
           "valueType": "string",
           "name": "theme",
@@ -90,6 +102,13 @@
             { "name": "White", "value": "white" },
             { "name": "Dark Gray", "value": "dark-gray" }
           ]
+        },
+        {
+          "component": "text",
+          "name": "ctaText",
+          "value": "Explore",
+          "label": "CTA Label",
+          "valueType": "string"
         },
         {
           "component": "aem-content",

@@ -2,37 +2,6 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 const DEFAULT_MAX_CARDS = 5;
-const VALID_THEMES = ['dark', 'light', 'blue', 'light-fade'];
-
-function normalizeTheme(theme) {
-  if (!theme) return '';
-  const lower = theme.trim().toLowerCase();
-  if (lower.includes('dark') || lower.includes('navy')) return 'dark';
-  if (lower.includes('blue')) return 'blue';
-  if (lower.includes('fade')) return 'light-fade';
-  if (lower.includes('light') || lower.includes('gray') || lower.includes('grey')) return 'light';
-  return VALID_THEMES.includes(lower) ? lower : '';
-}
-
-function applyTheme(li) {
-  const themeField = li.querySelector('[data-theme]');
-  if (themeField) {
-    const theme = normalizeTheme(themeField.dataset.theme);
-    if (theme) li.classList.add(`theme-${theme}`);
-    themeField.remove();
-    return;
-  }
-
-  const body = li.querySelector('.list-cards-card-body');
-  const firstBlock = body?.firstElementChild;
-  const fallbackTheme = normalizeTheme(firstBlock?.textContent);
-  if (fallbackTheme) {
-    li.classList.add(`theme-${fallbackTheme}`);
-    if (firstBlock.childElementCount === 0) {
-      firstBlock.remove();
-    }
-  }
-}
 
 function getCellText(cell) {
   if (!cell) return '';
@@ -53,14 +22,11 @@ function getLinkHref(cell) {
 export default function decorate(block) {
   const ul = document.createElement('ul');
 
-  // Read Maximum Items dynamically from dataset attribute or default
   const configuredMax = parseInt(block.dataset.maxItems, 10);
   const isValidMax = !Number.isNaN(configuredMax) && configuredMax > 0;
   const maxCards = isValidMax ? configuredMax : DEFAULT_MAX_CARDS;
 
-  // Filter out any metadata block header row and limit items by maxCards
   const rows = [...block.children].filter((row) => {
-    // If first row contains block metadata, skip it as a card item
     const firstCellText = getCellText(row.children[0]);
     return !firstCellText.toLowerCase().includes('maxitems');
   });
@@ -74,45 +40,85 @@ export default function decorate(block) {
     const cells = [...row.children];
 
     if (cells.length >= 4) {
-      const [categoryCell, titleCell, themeCell, textColorCell, linkCell] = cells;
+      const [
+        categoryCell,
+        titleCell,
+        descCell,
+        bgImgCell,
+        themeCell,
+        textColorCell,
+        ctaCell,
+        linkCell,
+      ] = cells;
+
+      // Background Image
+      const img = bgImgCell?.querySelector('img');
+      if (img?.src) {
+        li.style.backgroundImage = `url(${img.src})`;
+      }
 
       const cardBody = document.createElement('div');
       cardBody.className = 'list-cards-card-body';
 
+      const topContent = document.createElement('div');
+
+      // 1. Category
       const categoryText = getCellText(categoryCell);
       if (categoryText) {
         const badge = document.createElement('p');
         badge.className = 'list-cards-card-badge';
         badge.textContent = categoryText;
         if (categoryCell) moveInstrumentation(categoryCell, badge);
-        cardBody.append(badge);
+        topContent.append(badge);
       }
 
+      // 2. Title
       const titleText = getCellText(titleCell);
       if (titleText) {
         const title = document.createElement('h3');
         title.className = 'list-cards-card-title';
         title.textContent = titleText;
         if (titleCell) moveInstrumentation(titleCell, title);
-        cardBody.append(title);
+        topContent.append(title);
       }
 
-      const themeVal = normalizeTheme(getCellText(themeCell));
+      // 3. Description
+      const descText = getCellText(descCell);
+      if (descText) {
+        const desc = document.createElement('p');
+        desc.className = 'list-cards-card-desc';
+        desc.textContent = descText;
+        if (descCell) moveInstrumentation(descCell, desc);
+        topContent.append(desc);
+      }
+
+      // 4. Bottom CTA Label
+      const bottomContent = document.createElement('div');
+      const ctaText = getCellText(ctaCell) || 'Explore';
+      const cta = document.createElement('div');
+      cta.className = 'list-cards-card-cta';
+      cta.innerHTML = `<span>${ctaText}</span><span class="cta-arrow">&rarr;</span>`;
+      bottomContent.append(cta);
+
+      cardBody.append(topContent, bottomContent);
+
+      // Theme
+      const themeVal = getCellText(themeCell).toLowerCase();
       if (themeVal) {
         li.classList.add(`theme-${themeVal}`);
+      } else {
+        li.classList.add('theme-dark');
       }
 
+      // Text Color Override
       const textColorVal = getCellText(textColorCell).toLowerCase();
       if (textColorVal.includes('white')) {
         li.classList.add('text-white');
-      } else if (
-        textColorVal.includes('dark')
-        || textColorVal.includes('gray')
-        || textColorVal.includes('grey')
-      ) {
+      } else if (textColorVal.includes('dark') || textColorVal.includes('gray')) {
         li.classList.add('text-dark-gray');
       }
 
+      // Link Wrapper
       const href = getLinkHref(linkCell);
       if (href) {
         const linkWrapper = document.createElement('a');
@@ -123,40 +129,6 @@ export default function decorate(block) {
         li.append(linkWrapper);
       } else {
         li.append(cardBody);
-      }
-    } else {
-      while (row.firstElementChild) li.append(row.firstElementChild);
-
-      [...li.children].forEach((div) => {
-        if (div.children.length === 1 && div.querySelector('picture')) {
-          div.className = 'list-cards-card-image';
-        } else {
-          div.className = 'list-cards-card-body';
-
-          const firstPara = div.querySelector('p:first-child');
-          if (firstPara && !firstPara.querySelector('a')) {
-            firstPara.classList.add('list-cards-card-badge');
-          }
-        }
-      });
-      applyTheme(li);
-
-      const anchor = li.querySelector('.list-cards-card-body a[href]');
-      if (anchor) {
-        const linkWrapper = document.createElement('a');
-        linkWrapper.className = 'list-cards-card-link';
-        linkWrapper.href = anchor.href;
-        const bodyDiv = li.querySelector('.list-cards-card-body');
-        const pParent = anchor.parentElement;
-        if (pParent && pParent.tagName === 'P' && pParent.children.length === 1) {
-          pParent.remove();
-        } else {
-          anchor.remove();
-        }
-        if (bodyDiv) {
-          linkWrapper.append(bodyDiv);
-          li.append(linkWrapper);
-        }
       }
     }
 
